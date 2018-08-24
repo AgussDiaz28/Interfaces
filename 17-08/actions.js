@@ -1,8 +1,6 @@
   // ---------------------------------------- Creacion de un cuadrado y Circulo  ----------------------------------------
 
   var ctx = document.getElementById("canvas").getContext("2d");
-  ctx.fillStyle = 'rgba(5,133,0,1)'
-  ctx.fillRect(050, 205, 1500, 100);
   ctx.beginPath();
   ctx.arc(100, 75, 50, 0, 2 * Math.PI);
   ctx.lineWidth = 15;
@@ -27,30 +25,37 @@
   var cont = 0;
   var transpetencia = 0;
   var ratio = 3; // (1000 / 256);
+  var height = 1000;
+  var width = 750;
 
-  // ---------------------------------------- Barrido de Matriz de Pixeles ---------------------------------------- 
+  // ---------------------------------------- Barrido de Matriz de Pixeles ----------------------------------------
 
-  for (y = 0; y < 1000; y++) {
-    for (x = 0; x < 1000; x++) {
+  for (y = 0; y < height; y++) {
+    for (x = 0; x < width; x++) {
       if (cont === ratio) {
         cont = 0;
         transpetencia++;
       }
-      setPixel(imageData, x, y, 255, 127, 0, transpetencia);
+      if (y > width/2){
+          setPixel(imageData, x, y, 255, transpetencia, 0, 100);
+      }else{
+         setPixel(imageData, x, y, 255 , transpetencia, 0, 100);
+      }
+
 
     }
     cont++;
   }
 
   ctx.putImageData(imageData, 0, 0);
-  
+
   // ---------------------------------------- PAINT ----------------------------------------
-  
+
   var imageData = ctx.createImageData(1000, 1000);
   document.getElementById("canvas").addEventListener("mousemove",function(event){
       if (event.buttons == 1){
-      var cX = event.clientX;
-      var cY = event.clientY; 
+      var cX = event.layerX;
+      var cY = event.layerY;
       setPixel(imageData,cX,cY,255,0,0,255);
       ctx.putImageData(imageData,0,0);
     }
