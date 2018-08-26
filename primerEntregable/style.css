@@ -127,9 +127,26 @@ input[type="file"] {
     background-color: #f0f;
 }
 
-/*.eraser {*/
-    /*cursor: url(img/eraser.png), auto;*/
-/*}*/
+#salmon{
+    background-color: #fa8072;
+}
+
+#turquesa{
+    background-color: #5DC1B9;
+}
+
+#dorado{
+    background-color: #ffd83f;
+}
+
+#purple{
+    background-color: #b352d9;
+}
+
+#pink{
+    background-color: #f74bff;
+}
+
 
 CSS
 @media (max-width: 768px) {

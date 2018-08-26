@@ -3,6 +3,7 @@ let image = new Image();
 let imageData = ctx.getImageData(0,0,1150,700);
 let rgb = [0,0,0];
 let strokeSize = 5;
+let eraser = false;
 
 //Inicializacion de Sliders
 let brightnessSlider = document.getElementById("brightness");
@@ -103,16 +104,17 @@ function SaveImage(){
 }
 
 function loadFile(){
-    cleanCanvas()
+    cleanCanvas();
     let file    = document.querySelector('input[type=file]').files[0];
     let reader  = new FileReader();
 
     reader.onloadend = function () {
         image.src = reader.result;
         image.onload = function(){
-            ctx.drawImage(image,0,0);
+
+            ctx.drawImage(image, image.width/2, 0)
             imageData = ctx.getImageData(0,0,this.width,this.height);
-            ctx.putImageData(imageData, 0, 0);
+            ctx.putImageData(image, image.width/2, 0);
         }
     }
 
@@ -179,34 +181,29 @@ document.getElementById('cleanCanvas').addEventListener('click',function () {
     cleanCanvas();
 });
 
-document.getElementById("pencil").addEventListener("click",function(event) {
+document.getElementById("pencil").addEventListener("click",function() {
+    eraser = false;
     document.getElementById("canvas").classList.remove("eraser");
     document.getElementById("canvas").classList.add("pencil");
 });
 
-document.getElementById("eraser").addEventListener("click",function(event) {
+document.getElementById("eraser").addEventListener("click",function() {
+    eraser = true;
+    console.log(eraser);
     document.getElementById("canvas").classList.remove("pencil");
     document.getElementById("canvas").classList.add("eraser");
 
 });
 
-    //document.getElementById("canvasContainer").classList.add("pencil");
-    document.getElementById("canvas").addEventListener("mousemove",function(event){
-        if (event.buttons == 1){
-            let rgb = getSelectedColor();
-            colorear(rgb,event);
+document.getElementById("canvas").addEventListener("mousemove",function(event){
+    if (event.buttons == 1){
+        rgb = getSelectedColor();
+        if (eraser){
+            rgb = [255,255,255];
         }
-    });
-//});
-
-//document.getElementById("eraser").addEventListener("click",function(event){
-//     document.getElementById("canvas").addEventListener("mousemove",function(event){
-//         if (event.buttons == 1){
-//             let rgb = [0,0,0];
-//             colorear(rgb);
-//         }
-//     });
-//})
+        colorear(rgb,event);
+    }
+});
 
 document.getElementById("blackWhiteFilter").addEventListener("click",function(event){
     applyBlackAndWhiteFilter(imageData);
@@ -248,6 +245,10 @@ document.getElementById("pencilThickness").addEventListener("input",function(eve
     strokeSize = this.value;
 });
 
+document.getElementById("gussianBlur").addEventListener("click",function(event){
+    alert('hi under development');
+});
+
 document.getElementById("upload").addEventListener("change",function(event){
     loadFile();
 });
@@ -255,5 +256,3 @@ document.getElementById("upload").addEventListener("change",function(event){
 document.getElementById("saveFile").addEventListener("click",function(event){
     SaveImage();
 });
-
-
