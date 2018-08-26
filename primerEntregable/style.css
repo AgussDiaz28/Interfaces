@@ -77,8 +77,54 @@ input[type="file"] {
     display: none;
 }
 
-.pencil {
-    cursor: url(img/pencil.png), auto;
+.color{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+#canvas{
+    background-color: #fff;
+}
+
+.pencil{
+    cursor: url(img/pencil.ico),auto !important;
+}
+
+.eraser{
+    cursor: url(img/eraser.ico),auto !important;
+}
+
+#negro{
+    background-color: #000;
+}
+
+#blanco{
+    background-color: #fff;
+}
+
+#rojo{
+    background-color: #f00;
+}
+
+#naranja{
+    background-color: #f80;
+}
+
+#amarillo{
+    background-color: #ff0;
+}
+
+#verde{
+    background-color: #0f0;
+}
+
+#azul{
+    background-color: #00f;
+}
+
+#violeta{
+    background-color: #f0f;
 }
 
 /*.eraser {*/

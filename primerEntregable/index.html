@@ -14,7 +14,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"> Nuevo Canvas <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#" id="cleanCanvas"> Nuevo Canvas
+                        <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -30,8 +31,22 @@
                     <a class="nav-link" href="#" id="saveFile">Guardar Imagen</a>
                 </li>
             </ul>
-        </div>>
+        </div>
     </nav>
+    <div class="container">
+        <div class="row" id="palette">
+            <div class="col-xs-6">
+                <button id="negro" r="0" g="0" b="0" class="color active" type="button" name="button"></button>
+                <button id="rojo" r="255" g="0" b="0" class="color" type="button" name="button"></button>
+                <button id="amarillo" r="255" g="255" b="255" class="color" type="button" name="button"></button>
+                <button id="azul" r="0" g="0" b="255" class="color" type="button" name="button"></button>
+                <button id="blanco" r="255" g="255" b="255" class="color" type="button" name="button"></button>
+                <button id="naranja" r="255" g="127" b="0" class="color" type="button" name="button"></button>
+                <button id="verde" r="0" g="255" b="0" class="color" type="button" name="button"></button>
+                <button id="violeta" r="255" g="0" b="255" class="color" type="button" name="button"></button>
+            </div>
+        </div>
+    </div>
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar">
@@ -40,38 +55,47 @@
             </div>
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#"> <div>
-                        <i id="pencil">ICONO LAPIZ</i>
+                    <a href="#" id="pencil"> <div>
+                        <i > <img src="img/pencil.png" alt="" width="30" height="30"> Pintar </i>
                     </div></a>
                 </li>
                 <li>
-                    <a href="#"> <div >
-                        <i id="eraser">ICONO BORRAR</i>
+                    <a href="#" id="eraser"> <div >
+                        <i > <img src="img/eraser.png" alt="" width="30" height="30"> Borrar </i>
                     </div></a>
                 </li>
                 <li>
                     <a href="#"><div >
-                        <label for="brange"> Brillo </label>
-                        <input id="brightness" name="brange" type="range" min="-5" max="5" value="0"> <span
+                        <label for="pencilThickness"> Grosor Lapiz </label>
+                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="20" value="5">
+                        &nbsp; <span
+                            id="tvalue"></span>
+                    </div></a>
+                </li>
+                <li>
+                    <a href="#"><div >
+                        <label for="brightness"> Brillo de Imagen</label>
+                        <input id="brightness" name="brightness" type="range" min="-5" max="5" value="0"> &nbsp; <span
                             id="bvalue"></span>
                     </div></a>
                 </li>
                 <li>
                     <a href="#"><div >
-                        <label for="bsaturacion"> Saturacion </label>
-                        <input id="saturation" name="bsaturacion" type="range" min="-5" max="5" value="0"> <span
+                        <label for="saturation"> Saturacion de Imagen </label>
+                        <input id="saturation" name="saturation" type="range" min="-5" max="5" value="0"> &nbsp; <span
                             id="svalue"></span>
                     </div></a>
                 </li>
+
             </ul>
         </nav>
-        <div id="canvasContainer" style="border-style: dotted; float: left;">
-            <canvas id="canvas" width="1150" height="700"/>
+        <div id="canvasContainer">
+            <canvas class="pencil" id="canvas" width="1150" height="700" style="border: solid 1px;"/>
         </div>
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-header">
-                <h3>Ajustes</h3>
+                <h3>Filtros</h3>
             </div>
             <ul class="list-unstyled components">
                 <li>
@@ -88,6 +112,10 @@
                     <a href="#" id="invertFilter"> <div >
                         Invertir
                     </div></a>
+                </li><li>
+                    <a href="#" id="borderDetection"> <div >
+                        Deteccion de Bordes
+                    </div></a>
                 </li>
             </ul>
         </nav>
@@ -98,5 +126,6 @@
 	</body>
 	<script type="text/javascript" src="actions.js"></script>
     <script src="http://hongru.github.io/proj/canvas2image/canvas2image.js"></script>
+    <script src="https://www.marvinj.org/releases/marvinj-0.7.js"></script>
 
 </html>
