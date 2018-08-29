@@ -67,11 +67,13 @@ function gussianBlur(radio) {
         for (j=0;j<canvasWidth;j++){
             // Recorrido normal de matriz
             let val = [0,0,0,0];
-            for (k=0;k<radio;k++){
-                //Recorrido de nodos dependiendo del radio
-                let aux = getPixel(imageData,x+k,y+k);
-                val = sumarPixeles(val,aux);
-                //Procesar el valor
+            for (k=-radio;k<radio;k++){
+                for (t=-radio;t<radio;t++) {
+                    //Recorrido de nodos dependiendo del radio
+                    let aux = getPixel(imageData,x+t,y+j);
+                    val = sumarPixeles(val,aux);
+                    //Procesar el valor
+                }
             }
             aux = [0,0,0,0];
             let r = val[0]/radio;
@@ -126,6 +128,20 @@ function invert(imageData){
     }
 }
 
+function sepia(imageData){
+    console.log(imageData.data);
+    for (let i = 0; i < imageData.data.length; i+=4) {
+
+        let r = imageData.data[i];
+        let g = imageData.data[i + 1];
+        let b = imageData.data[i + 2];
+
+        imageData.data[i] = ( r * .393 ) + ( g *.769 ) + ( b * .189 );
+        imageData.data[i+1] = ( r * .349 ) + ( g *.686 ) + ( b * .168 );
+        imageData.data[i+2] = ( r * .272 ) + ( g *.534 ) + ( b * .131 );
+    }
+}
+
 //Funciones para guardado y subida de archivos
 
 function SaveImage(){
@@ -154,7 +170,7 @@ function loadFile(){
             canvasWidth = image.width;
             setWidth(canvasHeight,canvasWidth);
             canvas.drawImage(image, 0, 0);
-            imageData = canvas.getImageData(0,0,canvasHeight,canvasHeight);
+            imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
             canvas.putImageData(imageData, 0, 0);
         }
     };
@@ -186,6 +202,8 @@ function pintar(imageData, x, y, r, g, b, a){
 function colorear(rgb,event){
     let cX = event.layerX;
     let cY = event.layerY+25; //Ajuste de posicion del pintado
+    console.log("el valor de la x es de :"+cX);
+    console.log("el valor de la y es de :"+cY);
     pintar(imageData,cX,cY,rgb[0],rgb[1],rgb[2],255,10);
     canvas.putImageData(imageData,0,0);
 }
@@ -277,6 +295,11 @@ document.getElementById("pencilThickness").addEventListener("input",function(){
 
 document.getElementById("gussianBlur").addEventListener("click",function(){
     gussianBlur(38);
+});
+
+document.getElementById("gussianBlur").addEventListener("click",function(){
+    sepia(imageData);
+    canvas.putImageData(imageData, 0, 0);
 });
 
 document.getElementById("upload").addEventListener("change",function(){
