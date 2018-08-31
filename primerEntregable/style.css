@@ -87,6 +87,10 @@ input[type="file"] {
     background-color: #fff;
 }
 
+input .color{
+    background-color: #5DC1B9;
+}
+
 .pencil{
     cursor: url(img/pencil.ico),auto !important;
 }

@@ -33,9 +33,17 @@ thicknessSlider.oninput = function() {
     thicknessOutput.innerHTML = this.value;
 }
 
-function setWidth(width,height) {
+function setWidth(height,width) {
     canvasContainer.width = width;
     canvasContainer.height = height;
+}
+
+function hexToRGB(hex) {
+    var r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+    return [r,g,b];
+
 }
 
 function getPixel(imageData,x,y){
@@ -62,13 +70,14 @@ function sumarPixeles(val,aux) {
 }
 
 function gussianBlur(radio) {
-
+    let cont = 0;
     for (i=0;i<canvasHeight;i++){
         for (j=0;j<canvasWidth;j++){
             // Recorrido normal de matriz
             let val = [0,0,0,0];
             for (k=-radio;k<radio;k++){
                 for (t=-radio;t<radio;t++) {
+                    cont++;
                     //Recorrido de nodos dependiendo del radio
                     let aux = getPixel(imageData,x+t,y+j);
                     val = sumarPixeles(val,aux);
@@ -76,10 +85,10 @@ function gussianBlur(radio) {
                 }
             }
             aux = [0,0,0,0];
-            let r = val[0]/radio;
-            let g = val[1]/radio;
-            let b = val[2]/radio;
-            let a = val[3]/radio;
+            let r = val[0]/cont;
+            let g = val[1]/cont;
+            let b = val[2]/cont;
+            let a = val[3]/cont;
             setPixel(imageData, x, y, r, g, b, a);
         }
     }
@@ -129,7 +138,6 @@ function invert(imageData){
 }
 
 function sepia(imageData){
-    console.log(imageData.data);
     for (let i = 0; i < imageData.data.length; i+=4) {
 
         let r = imageData.data[i];
@@ -293,11 +301,16 @@ document.getElementById("pencilThickness").addEventListener("input",function(){
     strokeSize = this.value;
 });
 
-document.getElementById("gussianBlur").addEventListener("click",function(){
-    gussianBlur(38);
+document.getElementById("colorPicker").addEventListener("input",function(){
+    let hexaColor = this.value;
+    rgb = hexToRGB(hexaColor);
 });
 
 document.getElementById("gussianBlur").addEventListener("click",function(){
+    gussianBlur(2);
+});
+
+document.getElementById("sepia").addEventListener("click",function(){
     sepia(imageData);
     canvas.putImageData(imageData, 0, 0);
 });

@@ -14,13 +14,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#" id="cleanCanvas"> Nuevo Canvas
+                    <a class="nav-link" href="#" id="cleanCanvas"> Limpiar Canvas
                         <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <div>
-                            <label for="upload">Nueva Imagen</label>
+                            <label for="upload">Cargar Imagen</label>
                             <input type="file"
                                    id="upload" name="avatar"
                                    accept="image/png, image/jpeg" />
@@ -33,10 +33,16 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container" style="margin-top: 1%">
         <div class="row" id="palette">
             <div class="col-xs-4">
-                <span>Selecciones color de pincel: </span>
+                <a href="#" id="pencil">
+                    <i > <img src="img/pencil.ico" alt="" width="30" height="30"> </i>
+                </a>
+                <a href="#" id="eraser">
+                    <i > <img src="img/eraser.ico" alt="" width="30" height="30"> </i>
+                </a>
+                <input type="color" id="colorPicker" class="color" value="#ff00ff">
             </div>
             <div class="col-xs-6" style="margin-left: 8%">
                 <button id="negro" r="0" g="0" b="0" class="color active" type="button" name="button"></button>
@@ -58,54 +64,10 @@
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar">
-            <div class="sidebar-header">
-                <h3>Ajustes</h3>
-            </div>
             <ul class="list-unstyled components">
-                <li>
-                    <a href="#" id="pencil"> <div>
-                        <i > <img src="img/pencil.png" alt="" width="30" height="30"> Pintar </i>
-                    </div></a>
+                <li class="sidebar-header" style="align-self: center">
+                    <h4>Filtros</h4>
                 </li>
-                <li>
-                    <a href="#" id="eraser"> <div >
-                        <i > <img src="img/eraser.png" alt="" width="30" height="30"> Borrar </i>
-                    </div></a>
-                </li>
-                <li>
-                    <a href="#"><div >
-                        <label for="pencilThickness"> Grosor Lapiz </label>
-                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5">
-                        &nbsp; <span
-                            id="tvalue"></span>
-                    </div></a>
-                </li>
-                <li>
-                    <a href="#"><div >
-                        <label for="brightness"> Brillo de Imagen</label>
-                        <input id="brightness" name="brightness" type="range" min="-15" max="15" value="0"> &nbsp; <span
-                            id="bvalue"></span>
-                    </div></a>
-                </li>
-                <li>
-                    <a href="#"><div >
-                        <label for="saturation"> Saturacion de Imagen </label>
-                        <input id="saturation" name="saturation" type="range" min="-15" max="15" value="0"> &nbsp; <span
-                            id="svalue"></span>
-                    </div></a>
-                </li>
-
-            </ul>
-        </nav>
-        <div id="canvasContainer">
-            <canvas class="pencil" id="canvas" width="1150"  />
-        </div>
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <h3>Filtros</h3>
-            </div>
-            <ul class="list-unstyled components">
                 <li>
                     <a href="#" id="binaryFilter"> <div>
                         Binary
@@ -131,10 +93,37 @@
                         Sepia
                     </div></a>
                 </li>
+                <li class="sidebar-header">
+                    <h4>Ajustes</h4>
+                </li>
+                <li>
+                    <a href="#">
+                        <div>
+                        <label for="pencilThickness"> Grosor Lapiz </label>
+                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5"><span id="tvalue"></span>
+                        </div></a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div>
+                            <label for="brightness"> Brillo de Imagen</label>
+                            <input id="brightness" name="brightness" type="range" min="-15" max="15" value="0"> &nbsp; <span id="bvalue"></span>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><div >
+                        <label for="saturation"> Saturacion de Imagen </label>
+                        <input id="saturation" name="saturation" type="range" min="-15" max="15" value="0"> &nbsp; <span
+                            id="svalue"></span>
+                    </div></a>
+                </li>
+
             </ul>
         </nav>
-
-
+        <div id="canvasContainer">
+            <canvas class="pencil" id="canvas" height="700" width="1150"  />
+        </div>
     </div>
 
 	</body>
