@@ -7,6 +7,8 @@ let strokeSize = 5;
 let eraser = false;
 let canvasWidth = 1150;
 let canvasHeight = 700;
+let lastx = 0,
+    lasty = 0;
 
 //Inicializacion de Sliders
 let brightnessSlider = document.getElementById("brightness");
@@ -38,6 +40,15 @@ function setWidth(height,width) {
     canvasContainer.height = height;
 }
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 function hexToRGB(hex) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
@@ -62,15 +73,17 @@ function getPixel(imageData,x,y){
 }
 
 function sumarPixeles(val,aux) {
-    val[0] += aux[0];
-    val[1] += aux[1];
-    val[2] += aux[2];
-    val[3] += aux[3];
+    val[0] = val[0] + aux[0];
+    val[1] = val[0] + aux[1];
+    val[2] = val[0] + aux[2];
+    val[3] = val[0] + aux[3];
     return val;
 }
 
-function gussianBlur(radio) {
+function gussianBlur(imageData,radio) {
     let cont = 0;
+    let aux = [0,0,0,0];
+    let val = [0,0,0,0];
     for (i=0;i<canvasHeight;i++){
         for (j=0;j<canvasWidth;j++){
             // Recorrido normal de matriz
@@ -79,7 +92,7 @@ function gussianBlur(radio) {
                 for (t=-radio;t<radio;t++) {
                     cont++;
                     //Recorrido de nodos dependiendo del radio
-                    let aux = getPixel(imageData,x+t,y+j);
+                    aux = getPixel(imageData,x+t,y+j);
                     val = sumarPixeles(val,aux);
                     //Procesar el valor
                 }
@@ -92,6 +105,8 @@ function gussianBlur(radio) {
             setPixel(imageData, x, y, r, g, b, a);
         }
     }
+    canvas.putImageData(imageData, 0, 0);
+    alert('termino el blur');
 }
 
 function applyBlackAndWhiteFilter(imageData){
@@ -199,21 +214,26 @@ function setPixel(imageData, x, y, r, g, b, a) {
     imageData.data[index + 3] = a;
 }
 
-function pintar(imageData, x, y, r, g, b, a){
-    for (let i=-strokeSize; i< strokeSize; i++){
-        for (let j=-strokeSize; j< strokeSize; j++){
-            setPixel(imageData, x+i, y+j, r, g, b, a)
-        }
+function pintar(x, y, r, g, b){
+    if (lastx != -1){
+        canvas.lineWidth = strokeSize;
+        canvas.lineCap = 'round';
+        canvas.strokeStyle = rgbToHex(r,g,b);
+        canvas.beginPath();
+        canvas.moveTo(lastx, lasty); //punto anterior
+        canvas.lineTo(x, y); //punto nuevo
+        canvas.stroke();
+        canvas.closePath();
     }
+
+    lastx = x;
+    lasty = y;
 }
 
 function colorear(rgb,event){
     let cX = event.layerX;
     let cY = event.layerY+25; //Ajuste de posicion del pintado
-    console.log("el valor de la x es de :"+cX);
-    console.log("el valor de la y es de :"+cY);
-    pintar(imageData,cX,cY,rgb[0],rgb[1],rgb[2],255,10);
-    canvas.putImageData(imageData,0,0);
+    pintar(cX,cY,rgb[0],rgb[1],rgb[2]);
 }
 
 function getSelectedColor(){
@@ -232,19 +252,67 @@ function cleanCanvas(){
 
 //EVENTOS DE BOTONES
 
-let palletColors = document.getElementsByClassName("color");
+setEventosFiltros('blackWhiteFilter','click',applyBlackAndWhiteFilter);
+setEventosFiltros('invertFilter','click',invert);
+setEventosFiltros('binaryFilter','click',binarizacion);
+setEventosFiltros('sepia','click',sepia);
 
-for (var i = 0; i < palletColors.length; i++) {
-    palletColors[i].addEventListener('click', function () {
-        let r = this.getAttribute('r');
-        let g = this.getAttribute('g');
-        let b = this.getAttribute('b');
-        rgb = [r,g,b];
+setEventosDinamicos('brightness','input',increaseBrigthness);
+setEventosDinamicos('saturation','input',increaseSaturation);
+
+setEventoSimple('saveFile','click',SaveImage);
+setEventoSimple('upload','change',loadFile);
+setEventoSimple('cleanCanvas','click',cleanCanvas);
+
+function setEventoSimple(eventoID,listener,callback){
+    document.getElementById(eventoID).addEventListener(listener,function(){
+        callback();
     });
 }
 
-document.getElementById('cleanCanvas').addEventListener('click',function () {
-    cleanCanvas();
+function setEventosFiltros(eventoID,listener,callback){
+    document.getElementById(eventoID).addEventListener(listener,function(){
+        imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
+        callback(imageData);
+        canvas.putImageData(imageData, 0, 0);
+    });
+}
+
+function setEventosDinamicos(eventoID,listener,callback) {
+    document.getElementById(eventoID).addEventListener(listener,function(){
+        imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
+        let amount = parseInt(this.value);
+        callback(imageData,amount);
+        canvas.putImageData(imageData, 0, 0);
+    });
+}
+
+document.getElementById("canvas").addEventListener("mousemove",function(event){
+    if (event.buttons == 1){
+        rgb = getSelectedColor();
+        if (eraser){
+            rgb = [255,255,255];
+        }
+        colorear(rgb,event);
+    }else{
+        lastx = -1;
+        lasty = -1;
+    }
+});
+
+document.getElementById("gussianBlur").addEventListener("click",function(){
+    imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
+    gussianBlur(imageData,5);
+    canvas.putImageData(imageData, 0, 0);
+});
+
+document.getElementById("pencilThickness").addEventListener("input",function(){
+    strokeSize = this.value;
+});
+
+document.getElementById("colorPicker").addEventListener("input",function(){
+    let hexaColor = this.value;
+    rgb = hexToRGB(hexaColor);
 });
 
 document.getElementById("pencil").addEventListener("click",function() {
@@ -258,67 +326,4 @@ document.getElementById("eraser").addEventListener("click",function() {
     document.getElementById("canvas").classList.remove("pencil");
     document.getElementById("canvas").classList.add("eraser");
 
-});
-
-document.getElementById("canvas").addEventListener("mousemove",function(event){
-    if (event.buttons == 1){
-        rgb = getSelectedColor();
-        if (eraser){
-            rgb = [255,255,255];
-        }
-        colorear(rgb,event);
-    }
-});
-
-document.getElementById("blackWhiteFilter").addEventListener("click",function(){
-    applyBlackAndWhiteFilter(imageData);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("invertFilter").addEventListener("click",function(){
-    invert(imageData);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("binaryFilter").addEventListener("click",function(){
-    binarizacion(imageData);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("brightness").addEventListener("input",function(){
-    let amount = parseInt(this.value);
-    increaseBrigthness(imageData,amount);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("saturation").addEventListener("input",function(){
-    let amount = parseInt(this.value);
-    increaseSaturation(imageData,amount);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("pencilThickness").addEventListener("input",function(){
-    strokeSize = this.value;
-});
-
-document.getElementById("colorPicker").addEventListener("input",function(){
-    let hexaColor = this.value;
-    rgb = hexToRGB(hexaColor);
-});
-
-document.getElementById("gussianBlur").addEventListener("click",function(){
-    gussianBlur(2);
-});
-
-document.getElementById("sepia").addEventListener("click",function(){
-    sepia(imageData);
-    canvas.putImageData(imageData, 0, 0);
-});
-
-document.getElementById("upload").addEventListener("change",function(){
-    loadFile();
-});
-
-document.getElementById("saveFile").addEventListener("click",function(){
-    SaveImage();
 });
