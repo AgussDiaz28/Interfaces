@@ -7,17 +7,17 @@ let strokeSize = 5;
 let eraser = false;
 let canvasWidth = 1150;
 let canvasHeight = 700;
-let lastx = 0,
-    lasty = 0;
+let lastx = 0;
+let lasty = 0;
 
 //Inicializacion de Sliders
 let brightnessSlider = document.getElementById("brightness");
 let brightnessOutput = document.getElementById("bvalue");
 brightnessOutput.innerHTML = brightnessSlider.value;
 
-let saturationSlider = document.getElementById("saturation");
-let saturationOutput = document.getElementById("svalue");
-saturationOutput.innerHTML = saturationSlider.value;
+let contrasteSlider = document.getElementById("contraste");
+let contrasteOutput = document.getElementById("cvalue");
+contrasteOutput.innerHTML = contrasteSlider.value;
 
 let thicknessSlider = document.getElementById("pencilThickness");
 let thicknessOutput = document.getElementById("tvalue");
@@ -27,14 +27,15 @@ brightnessSlider.oninput = function() {
     brightnessOutput.innerHTML = this.value;
 }
 
-saturationSlider.oninput = function() {
-    saturationOutput.innerHTML = this.value;
+contrasteSlider.oninput = function() {
+    contrasteOutput.innerHTML = this.value;
 }
 
 thicknessSlider.oninput = function() {
     thicknessOutput.innerHTML = this.value;
 }
 
+//AUX FUNCTIONS
 function setWidth(height,width) {
     canvasContainer.width = width;
     canvasContainer.height = height;
@@ -63,110 +64,108 @@ function getPixel(imageData,x,y){
         if (x < canvasWidth || y < canvasHeight ){
             let index = (x+y*canvasWidth) * 4;
             let r = imageData.data[index];
-            let g = imageData.data[index];
-            let b = imageData.data[index];
-            let a = imageData.data[index];
+            let g = imageData.data[index+1];
+            let b = imageData.data[index+2];
+            let a = imageData.data[index+3];
             pixel = [r,g,b,a];
         }
     }
     return pixel;
 }
 
+//Funcion que suma dos array de pixeles
 function sumarPixeles(val,aux) {
     val[0] = val[0] + aux[0];
-    val[1] = val[0] + aux[1];
-    val[2] = val[0] + aux[2];
-    val[3] = val[0] + aux[3];
+    val[1] = val[1] + aux[1];
+    val[2] = val[2] + aux[2];
+    val[3] = val[3] + aux[3];
     return val;
 }
 
+//FILTROS
 function gussianBlur(imageData,radio) {
-    let cont = 0;
-    let aux = [0,0,0,0];
-    let val = [0,0,0,0];
-    for (i=0;i<canvasHeight;i++){
-        for (j=0;j<canvasWidth;j++){
-            // Recorrido normal de matriz
-            let val = [0,0,0,0];
-            for (k=-radio;k<radio;k++){
-                for (t=-radio;t<radio;t++) {
+
+    for (i=0;i<imageData.data.width;i++){
+        for (j=0;j<imageData.data.width;j++){ // Recorrido la matriz de la imagen
+            let cont = 0; //Cantidad de pixeles visitados
+            let val = [0,0,0,0]; //Variable que guarda la suma de los pixeles
+            let aux = [0,0,0,0]; //Variable que guarda el valor del pixel en un x e y
+            for (k=i-radio;k<i+radio;k++){  //Recorrido de la matriz convolucion
+                for (t=j-radio;t<j+radio;t++) {
                     cont++;
-                    //Recorrido de nodos dependiendo del radio
-                    aux = getPixel(imageData,x+t,y+j);
+                    aux = getPixel(imageData,i+k,t+j);
                     val = sumarPixeles(val,aux);
-                    //Procesar el valor
                 }
             }
-            aux = [0,0,0,0];
-            let r = val[0]/cont;
-            let g = val[1]/cont;
-            let b = val[2]/cont;
-            let a = val[3]/cont;
-            setPixel(imageData, x, y, r, g, b, a);
+            let r = Math.floor(val[0]/cont);
+            let g = Math.floor(val[1]/cont);
+            let b = Math.floor(val[2]/cont);
+            setPixel(imageData, x, y, r, g, b, 255);
         }
     }
-    canvas.putImageData(imageData, 0, 0);
     alert('termino el blur');
 }
 
-function applyBlackAndWhiteFilter(imageData){
-    for (let i = 0; i < imageData.data.length; i+=4) {
+//Algoritmo que transforma la imagen en blanco y negro con tonalidades grises
+function applyBlackAndWhiteFilter(imageData,i,adjustmentValue){
         let promedio = ((imageData.data[i]+imageData.data[i+1]+imageData.data[i+2])/3);
         promedio = Math.floor(promedio);
         imageData.data[i]       = promedio;
         imageData.data[i + 1]   = promedio;
         imageData.data[i + 2]   = promedio;
-    }
 }
 
-function increaseBrigthness(imageData,amount){
-    for (let i = 0; i < imageData.data.length; i+=4) {
-        imageData.data[i]       += amount;
-        imageData.data[i + 1]   += amount;
-        imageData.data[i + 2]   += amount;
-    }
+//Algoritmo que aumenta el brillo de la imagen
+function increaseBrigthness(imageData,i,adjustmentValue){
+        imageData.data[i]       += adjustmentValue;
+        imageData.data[i + 1]   += adjustmentValue;
+        imageData.data[i + 2]   += adjustmentValue;
 }
 
-function increaseSaturation(imageData,amount){
-    for (let i = 0; i < imageData.data.length; i+=4) {
-        imageData.data[i]       = imageData.data[i] + amount;
-        imageData.data[i + 1]   = imageData.data[i+1] + amount;
-        imageData.data[i + 2]   = imageData.data[i+2] + amount;
-    }
+//Algoritmo que cambia aumenta el contraste de la imagen
+function increaseContrast(imageData,i,adjustmentValue){
+        let factor = ( 259 * ( adjustmentValue + 255 ) ) / ( 255 * ( 259 - adjustmentValue ) );
+        imageData.data[i]       = factor * (imageData.data[i+0] - 128 )+ 128;
+        imageData.data[i + 1]   = factor * (imageData.data[i+1] - 128 )+ 128;
+        imageData.data[i + 2]   = factor * (imageData.data[i+2] - 128 )+ 128;
 }
 
-function binarizacion(imageData){
-    for (let i = 0; i < imageData.data.length; i+=4) {
+//Algoritmo que cambia los pixeles a blanco o negro
+function binarizacion(imageData,i,adjustmentValue = null){
         imageData.data[i]       = (imageData.data[i]/2 > 127 )? 255 : 0;
         imageData.data[i + 1]   = (imageData.data[i]/2 > 127 )? 255 : 0;
         imageData.data[i + 2]   = (imageData.data[i]/2 > 127 )? 255 : 0;
-    }
 }
 
-function invert(imageData){
-    console.log(imageData.data);
+//Algoritmo que cambia los pixeles a su inverso
+function invert(imageData,i,adjustmentValue = null){
+    imageData.data[i]       =  255 - imageData.data[i]   ;
+    imageData.data[i + 1]   =  255 - imageData.data[i+1] ;
+    imageData.data[i + 2]   =  255 - imageData.data[i+2] ;
+}
+
+//Algoritmo que cambia los pixeles a una tonalidad sepia
+function sepia(imageData,i,adjustmentValue = null){
+    let r = imageData.data[i];
+    let g = imageData.data[i + 1];
+    let b = imageData.data[i + 2];
+
+    imageData.data[i] = ( r * .393 ) + ( g *.769 ) + ( b * .189 );
+    imageData.data[i+1] = ( r * .349 ) + ( g *.686 ) + ( b * .168 );
+    imageData.data[i+2] = ( r * .272 ) + ( g *.534 ) + ( b * .131 );
+}
+
+//Funcion que recorre arreglo de imagedata y cambia sus valores. Recibe por parametro la funcion que va a realizar
+// el cambio y un valor de configuracion seteado por el usuario
+function recorrerImageData(callback,adjustmentValue) {
+    imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
     for (let i = 0; i < imageData.data.length; i+=4) {
-        imageData.data[i]       =  255 - imageData.data[i]   ;
-        imageData.data[i + 1]   =  255 - imageData.data[i+1] ;
-        imageData.data[i + 2]   =  255 - imageData.data[i+2] ;
+        callback(imageData,i,adjustmentValue);
     }
+    canvas.putImageData(imageData, 0, 0);
 }
 
-function sepia(imageData){
-    for (let i = 0; i < imageData.data.length; i+=4) {
-
-        let r = imageData.data[i];
-        let g = imageData.data[i + 1];
-        let b = imageData.data[i + 2];
-
-        imageData.data[i] = ( r * .393 ) + ( g *.769 ) + ( b * .189 );
-        imageData.data[i+1] = ( r * .349 ) + ( g *.686 ) + ( b * .168 );
-        imageData.data[i+2] = ( r * .272 ) + ( g *.534 ) + ( b * .131 );
-    }
-}
-
-//Funciones para guardado y subida de archivos
-
+//Funciones para guardado de imagenes
 function SaveImage(){
 
     let link = window.document.createElement( 'a' ),
@@ -181,6 +180,7 @@ function SaveImage(){
 
 }
 
+//Funcion que limpia el canvas y dibuja la nueva imagen en el canvas
 function loadFile(){
     cleanCanvas();
     let file    = document.querySelector('input[type=file]').files[0];
@@ -205,7 +205,7 @@ function loadFile(){
     }
 }
 
-//function to paint
+//Function que cambia el color de un pixel dado un X e Y
 function setPixel(imageData, x, y, r, g, b, a) {
     index = (x + y * canvasWidth) * 4;
     imageData.data[index + 0] = r;
@@ -214,6 +214,7 @@ function setPixel(imageData, x, y, r, g, b, a) {
     imageData.data[index + 3] = a;
 }
 
+//Funcion que dado un X e Y crea una linea con el X e Y anterior
 function pintar(x, y, r, g, b){
     if (lastx != -1){
         canvas.lineWidth = strokeSize;
@@ -230,16 +231,25 @@ function pintar(x, y, r, g, b){
     lasty = y;
 }
 
-function colorear(rgb,event){
-    let cX = event.layerX;
-    let cY = event.layerY+25; //Ajuste de posicion del pintado
-    pintar(cX,cY,rgb[0],rgb[1],rgb[2]);
+//Funcion que obtiene el X e Y del evento mousemove y manda el color seleccionado
+function colorear(event){
+    let rgb = getSelectedColor();
+    if (event.buttons == 1){
+        if (eraser){
+            rgb = [255,255,255];
+        }
+        pintar(event.layerX,event.layerY+25,rgb[0],rgb[1],rgb[2]);
+    }else{
+        lastx = -1;
+        lasty = -1;
+    }
 }
 
 function getSelectedColor(){
     return rgb;
 }
 
+//Funcion que limbia el canvas
 function cleanCanvas(){
     imageData = canvas.createImageData(canvasWidth, canvasHeight);
     for(x=0; x<canvasWidth; x++){
@@ -258,7 +268,7 @@ setEventosFiltros('binaryFilter','click',binarizacion);
 setEventosFiltros('sepia','click',sepia);
 
 setEventosDinamicos('brightness','input',increaseBrigthness);
-setEventosDinamicos('saturation','input',increaseSaturation);
+setEventosDinamicos('contraste','input',increaseContrast);
 
 setEventoSimple('saveFile','click',SaveImage);
 setEventoSimple('upload','change',loadFile);
@@ -272,37 +282,24 @@ function setEventoSimple(eventoID,listener,callback){
 
 function setEventosFiltros(eventoID,listener,callback){
     document.getElementById(eventoID).addEventListener(listener,function(){
-        imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
-        callback(imageData);
-        canvas.putImageData(imageData, 0, 0);
+        recorrerImageData(callback,null);
     });
 }
 
 function setEventosDinamicos(eventoID,listener,callback) {
     document.getElementById(eventoID).addEventListener(listener,function(){
-        imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
         let amount = parseInt(this.value);
-        callback(imageData,amount);
-        canvas.putImageData(imageData, 0, 0);
+        recorrerImageData(callback,amount);
     });
 }
 
 document.getElementById("canvas").addEventListener("mousemove",function(event){
-    if (event.buttons == 1){
-        rgb = getSelectedColor();
-        if (eraser){
-            rgb = [255,255,255];
-        }
-        colorear(rgb,event);
-    }else{
-        lastx = -1;
-        lasty = -1;
-    }
+    colorear(event);
 });
 
 document.getElementById("gussianBlur").addEventListener("click",function(){
     imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
-    gussianBlur(imageData,5);
+    gussianBlur(imageData,1);
     canvas.putImageData(imageData, 0, 0);
 });
 
