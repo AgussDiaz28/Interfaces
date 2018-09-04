@@ -19,6 +19,12 @@ Filter.sharpen = function() {
     canvas.putImageData(imageData, 0, 0);
 };
 
+Filter.edgeDetection = function() {
+    let imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
+    imageData = Filter.filterImageData(Filter.convolute, imageData, [ 0, -1,  0, -1,  5, -1, 0, -1,  0 ]); //sharpen
+    canvas.putImageData(imageData, 0, 0);
+};
+
 Filter.filterImageData = function(filter, imageData, var_args) {
     let args = [imageData];
     for (let i=2; i<arguments.length; i++) {
@@ -76,47 +82,46 @@ Filter.sepia = function (imageData,i,adjustmentValue = null){
 };
 
 Filter.convolute = function(pixels, weights, opaque) {
-    let side = Math.round(Math.sqrt(weights.length)); //Tamaño de la imagen
-    let halfSide = Math.floor(side/2); //Mitad
+    let size = Math.round(Math.sqrt(weights.length)); //Tamaño de la matriz convolucion
+    let halfSize = Math.floor(size/2);
+    // Pixeles del imagedata original
     let src = pixels.data;
     let sw = pixels.width;
     let sh = pixels.height;
-    // pad output by the convolution matrix
-    let w = sw;
-    let h = sh;
-    let output = Filter.createImageData(w, h);
-    let dst = output.data;
-    // go through the destination image pixels
+    let imageData = Filter.createImageData(sw, sh);
+    let idCopy = imageData.data;
     let alphaFac = opaque ? 1 : 0;
-    for (let y=0; y<h; y++) {
-        for (let x=0; x<w; x++) {
+    for (let y=0; y<sh; y++) {
+        for (let x=0; x<sw; x++) {
             let sy = y;
             let sx = x;
-            let dstOff = (y*w+x)*4;
-            // calculate the weighed sum of the source image pixels that
-            // fall under the convolution matrix
+            let index = (y*sw+x)*4;
             let r=0, g=0, b=0, a=0;
-            for (let cy=0; cy<side; cy++) {
-                for (let cx=0; cx<side; cx++) {
-                    let scy = sy + cy - halfSide;
-                    let scx = sx + cx - halfSide;
+
+            //Recalculo el valor de los pixeles aledaños - Recorro matriz convolucion
+            for (let cy=0; cy<size; cy++) {
+                for (let cx=0; cx<size; cx++) {
+                    let scy = sy + cy - halfSize; // y de origen de la matriz convolucion
+                    let scx = sx + cx - halfSize; // x de origen de la matriz convolucion
+
+                    // mientras no sea una direccion xy invalido calculo los nuevos valores de rgb
                     if (scy >= 0 && scy < sh && scx >= 0 && scx < sw) {
-                        let srcOff = (scy*sw+scx)*4;
-                        let wt = weights[cy*side+cx];
-                        r += src[srcOff] * wt;
-                        g += src[srcOff+1] * wt;
-                        b += src[srcOff+2] * wt;
-                        a += src[srcOff+3] * wt;
+                        let newIndex = (scy*sw+scx)*4;
+                        let wt = weights[cy*size+cx];
+                        r += src[newIndex] * wt;
+                        g += src[newIndex+1] * wt;
+                        b += src[newIndex+2] * wt;
+                        a += src[newIndex+3] * wt;
                     }
                 }
             }
-            dst[dstOff] = r;
-            dst[dstOff+1] = g;
-            dst[dstOff+2] = b;
-            dst[dstOff+3] = a + alphaFac*(255-a);
+            idCopy[index] = r;
+            idCopy[index+1] = g;
+            idCopy[index+2] = b;
+            idCopy[index+3] = a + alphaFac*(255-a);
         }
     }
-    return output;
+    return imageData;
 };
 
 
