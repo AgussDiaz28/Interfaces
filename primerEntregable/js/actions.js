@@ -58,7 +58,7 @@ function getSelectedColor(){
 function SaveImage(){
 
     let link = window.document.createElement( 'a' ),
-        url = canvasContainer.toDataURL(), filename = 'screenshot.jpg';
+        url =  document.getElementById("canvas").toDataURL(), filename = 'screenshot.jpg';
 
     link.setAttribute( 'href', url );
     link.setAttribute( 'download', filename );

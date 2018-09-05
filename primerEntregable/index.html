@@ -11,15 +11,15 @@
     <link rel="icon" href="img/paint.png">
 	<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">PA</a>
+        <a class="navbar-brand"  >PA</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#" id="cleanCanvas"> Limpiar Canvas
+                    <a class="nav-link"   id="cleanCanvas"> Limpiar Canvas
                         <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link"  >
                         <div>
                             <label for="upload">Cargar Imagen</label>
                             <input type="file"
@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="saveFile">Guardar Imagen</a>
+                    <a class="nav-link" id="saveFile"> Guardar Imagen</a>
                 </li>
             </ul>
         </div>
@@ -37,10 +37,10 @@
     <div class="container" style="margin-top: 1%">
         <div class="row" id="palette">
             <div class="col-xs-4">
-                <a href="#" id="pencil">
+                <a   id="pencil">
                     <i > <img src="img/pencil.ico" alt="" width="30" height="30"> </i>
                 </a>
-                <a href="#" id="eraser">
+                <a   id="eraser">
                     <i > <img src="img/eraser.ico" alt="" width="30" height="30"> </i>
                 </a>
                 <input type="color" id="colorPicker" class="color" value="#00cefc">
@@ -55,32 +55,32 @@
                     <h4>Filtros</h4>
                 </li>
                 <li>
-                    <a href="#" id="binaryFilter"> <div>
-                        Binary
+                    <a id="binaryFilter"> <div>
+                        Binario
                     </div></a>
                 </li>
                 <li>
-                    <a href="#" id="blackWhiteFilter"> <div >
-                        APLICAR b&w
+                    <a id="blackWhiteFilter"> <div >
+                        Black & White
                     </div></a>
                 </li>
                 <li>
-                    <a href="#" id="invertFilter"> <div >
+                    <a id="invertFilter"> <div >
                         Invertir
                     </div></a>
                 </li>
                 <li>
-                    <a href="#" id="gaussianBlur"> <div >
+                    <a id="gaussianBlur"> <div >
                         Gussian Blur
                     </div></a>
                 </li>
                 <li>
-                    <a href="#" id="sharpen"> <div >
+                    <a id="sharpen"> <div >
                         Sharpen
                     </div></a>
                 </li>
                 <li>
-                    <a href="#" id="sepia"> <div >
+                    <a id="sepia"> <div >
                         Sepia
                     </div></a>
                 </li>
@@ -88,32 +88,31 @@
                     <h4>Ajustes</h4>
                 </li>
                 <li>
-                    <a href="#">
-                        <div>
+                    <a><div>
                         <label for="pencilThickness"> Grosor Lapiz </label>
-                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5"><span id="tvalue"></span>
-                        </div></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <label for="brightness"> Brillo de Imagen</label>
-                            <input id="brightness" name="brightness" type="range" min="-15" max="15" value="0"> &nbsp; <span id="bvalue"></span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#"><div >
-                        <label for="contraste"> Contraste de Imagen </label>
-                        <input id="contraste" name="contraste" type="range" min="-15" max="15" value="0"> &nbsp; <span
-                            id="cvalue"></span>
+                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5">
+                        &nbsp; <span id="tvalue"></span>
                     </div></a>
                 </li>
                 <li>
-                    <a href="#"><div >
-                        <label for="saturacion"> Saturacion de Imagen </label>
-                        <input id="saturacion" name="saturacion" type="range" min="-15" max="15" value="0"> &nbsp; <span
+                    <a><div>
+                        <label for="brightness"> Brillo de Imagen</label>
+                        <input id="brightness" name="brightness" type="range" min="-25" max="25" value="0"> &nbsp; <span
+                            id="bvalue"></span>
+                    </div></a>
+                </li>
+                <li>
+                    <a><div >
+                        <label for="saturation"> Saturacion de Imagen </label>
+                        <input id="saturation" name="saturation" type="range" min="-25" max="25" value="0"> &nbsp; <span
                             id="svalue"></span>
+                    </div></a>
+                </li>
+                <li>
+                    <a><div >
+                        <label for="contraste"> Contraste de Imagen </label>
+                        <input id="contraste" name="contraste" type="range" min="-25" max="25" value="0"> &nbsp; <span
+                            id="cvalue"></span>
                     </div></a>
                 </li>
 
