@@ -86,10 +86,6 @@ input[type="file"] {
     background-color: #fff;
 }
 
-input .color{
-    background-color: #5DC1B9;
-}
-
 .pencil{
     cursor: url(img/pencil.ico),auto !important;
 }
@@ -97,59 +93,6 @@ input .color{
 .eraser{
     cursor: url(img/eraser.ico),auto !important;
 }
-
-#negro{
-    background-color: #000;
-}
-
-#blanco{
-    background-color: #fff;
-}
-
-#rojo{
-    background-color: #f00;
-}
-
-#naranja{
-    background-color: #f80;
-}
-
-#amarillo{
-    background-color: #ff0;
-}
-
-#verde{
-    background-color: #0f0;
-}
-
-#azul{
-    background-color: #00f;
-}
-
-#violeta{
-    background-color: #f0f;
-}
-
-#salmon{
-    background-color: #fa8072;
-}
-
-#turquesa{
-    background-color: #5DC1B9;
-}
-
-#dorado{
-    background-color: #ffd83f;
-}
-
-#purple{
-    background-color: #b352d9;
-}
-
-#pink{
-    background-color: #f74bff;
-}
-
 
 CSS
 @media (max-width: 768px) {

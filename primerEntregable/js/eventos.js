@@ -36,8 +36,10 @@ setEventosDinamicos('contraste','input',Filter.increaseContrast);
 setEventoSimple('saveFile','click',SaveImage);
 setEventoSimple('upload','change',loadFile);
 setEventoSimple('cleanCanvas','click',cleanCanvas);
+
 setEventoSimple('gaussianBlur','click',Filter.gaussianBlur);
 setEventoSimple('sharpen','click',Filter.sharpen);
+setEventoSimple('edgeDetection','click',Filter.edgeDetection);
 
 document.getElementById("canvas").addEventListener("mousemove",function(event){
     Paint.pintarCanvas(event);

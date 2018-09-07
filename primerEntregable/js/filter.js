@@ -21,7 +21,7 @@ Filter.sharpen = function() {
 
 Filter.edgeDetection = function() {
     let imageData = canvas.getImageData(0,0,canvasWidth,canvasHeight);
-    imageData = Filter.filterImageData(Filter.convolute, imageData, [ 0, -1,  0, -1,  5, -1, 0, -1,  0 ]); //sharpen
+    imageData = Filter.filterImageData(Filter.convolute, imageData, [0, 1, 0, 1,  -4, 1, 0, 1,  0]);
     canvas.putImageData(imageData, 0, 0);
 };
 
@@ -81,7 +81,7 @@ Filter.sepia = function (imageData,i,adjustmentValue = null){
     imageData.data[i+2] = ( r * .272 ) + ( g *.534 ) + ( b * .131 );
 };
 
-Filter.convolute = function(pixels, weights, opaque) {
+Filter.convolute = function(pixels, weights) {
     let size = Math.round(Math.sqrt(weights.length)); //Tamaño de la matriz convolucion
     let halfSize = Math.floor(size/2);
     // Pixeles del imagedata original
@@ -90,7 +90,6 @@ Filter.convolute = function(pixels, weights, opaque) {
     let sh = pixels.height;
     let imageData = Filter.createImageData(sw, sh);
     let idCopy = imageData.data;
-    let alphaFac = opaque ? 1 : 0;
     for (let y=0; y<sh; y++) {
         for (let x=0; x<sw; x++) {
             let sy = y;
@@ -118,7 +117,7 @@ Filter.convolute = function(pixels, weights, opaque) {
             idCopy[index] = r;
             idCopy[index+1] = g;
             idCopy[index+2] = b;
-            idCopy[index+3] = a + alphaFac*(255-a);
+            idCopy[index+3] = 255;
         }
     }
     return imageData;

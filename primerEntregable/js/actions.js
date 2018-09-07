@@ -93,6 +93,8 @@ function loadFile(){
     } else {
         image.src = "";
     }
+
+
 }
 
 //FUNCIONES DE SETEO DE EVENTOS

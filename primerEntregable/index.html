@@ -51,70 +51,74 @@
         <!-- Sidebar -->
         <nav class="sidebar">
             <ul class="list-unstyled components">
-                <li class="sidebar-header" style="align-self: center">
-                    <h4>Filtros</h4>
-                </li>
-                <li>
-                    <a id="binaryFilter"> <div>
-                        Binario
-                    </div></a>
-                </li>
-                <li>
-                    <a id="blackWhiteFilter"> <div >
-                        Black & White
-                    </div></a>
-                </li>
-                <li>
-                    <a id="invertFilter"> <div >
-                        Invertir
-                    </div></a>
-                </li>
-                <li>
-                    <a id="gaussianBlur"> <div >
-                        Gussian Blur
-                    </div></a>
-                </li>
-                <li>
-                    <a id="sharpen"> <div >
-                        Sharpen
-                    </div></a>
-                </li>
-                <li>
-                    <a id="sepia"> <div >
-                        Sepia
-                    </div></a>
-                </li>
-                <li class="sidebar-header">
-                    <h4>Ajustes</h4>
-                </li>
-                <li>
-                    <a><div>
-                        <label for="pencilThickness"> Grosor Lapiz </label>
-                        <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5">
-                        &nbsp; <span id="tvalue"></span>
-                    </div></a>
-                </li>
-                <li>
-                    <a><div>
-                        <label for="brightness"> Brillo de Imagen</label>
-                        <input id="brightness" name="brightness" type="range" min="-25" max="25" value="0"> &nbsp; <span
-                            id="bvalue"></span>
-                    </div></a>
-                </li>
-                <li>
-                    <a><div >
-                        <label for="saturation"> Saturacion de Imagen </label>
-                        <input id="saturation" name="saturation" type="range" min="-25" max="25" value="0"> &nbsp; <span
-                            id="svalue"></span>
-                    </div></a>
-                </li>
-                <li>
-                    <a><div >
-                        <label for="contraste"> Contraste de Imagen </label>
-                        <input id="contraste" name="contraste" type="range" min="-25" max="25" value="0"> &nbsp; <span
-                            id="cvalue"></span>
-                    </div></a>
-                </li>
+                <div class="col-sx-6">
+                    <li class="sidebar-header" style="align-self: center">
+                        <h4>Filtros</h4>
+                    </li>
+                    <li>
+                        <a id="binaryFilter"> <div>
+                            Binario
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="blackWhiteFilter"> <div >
+                            Black & White
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="invertFilter"> <div >
+                            Invertir
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="sepia"> <div >
+                            Sepia
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="gaussianBlur"> <div >
+                            Gussian Blur
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="sharpen"> <div >
+                            Sharpen
+                        </div></a>
+                    </li>
+                    <li>
+                        <a id="edgeDetection"> <div >
+                            Edge Detection
+                        </div></a>
+                    </li>
+
+                </div>
+                <div class="col-sx-6">
+                    <li class="sidebar-header">
+                        <h4>Ajustes</h4>
+                    </li>
+                    <li>
+                        <a><div>
+                            <label for="pencilThickness"> Grosor Lapiz </label>
+                            <input id="pencilThickness" name="pencilThickness" type="range" min="1" max="40" value="5">
+                            &nbsp; <span id="tvalue"></span>
+                        </div></a>
+                    </li>
+                    <li>
+                        <a><div>
+                            <label for="brightness"> Brillo de Imagen</label>
+                            <input id="brightness" name="brightness" type="range" min="-25" max="25" value="0"> &nbsp; <span
+                                id="bvalue"></span>
+                        </div></a>
+                    </li>
+                    <li>
+                        <a><div >
+                            <label for="contraste"> Contraste de Imagen </label>
+                            <input id="contraste" name="contraste" type="range" min="-25" max="25" value="0"> &nbsp; <span
+                                id="cvalue"></span>
+                        </div></a>
+                    </li>
+                </div>
+
 
             </ul>
         </nav>
