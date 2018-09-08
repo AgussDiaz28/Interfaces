@@ -73,6 +73,7 @@ function SaveImage(){
 function loadFile(){
     cleanCanvas();
     let file    = document.querySelector('input[type=file]').files[0];
+    document.getElementById("upload").value = "";
     let reader  = new FileReader();
     let image = new Image();
 
