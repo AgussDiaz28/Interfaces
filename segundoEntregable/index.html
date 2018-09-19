@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title> Segundo Entregable </title>
+	</head>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/paint.png">
+	<body class="center">
+        <div class="container" style="margin-top: 1%">
+            <div class="row justify-content-md-center">
+                <div class="col-5 justify-content-md-right">
+                    <label for="namep1"> Nombre Jugador 1</label> <br>
+                    <input name="name" id="namep1"type="text" value="Agustin">  </input>
+                </div>
+                <div class="col-2 justify-content-md-right" >
+                    <button id="start"> Empezar Juego </button>
+                </div>
+                <div class="col-5" style="float: left;">
+                    <label for="namep2"> Nombre Jugador 2</label> <br>
+                    <input name="name" id="namep2"type="text" value="Diego"> </input>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center" >
+                <div class="col">
+                    <canvas id="canvas" width="1100" height="750" style="border-style: dashed"></canvas>
+                </div>
+            </div>
+        </div>
+
+	</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/Jugador.js"></script>
+    <script type="text/javascript" src="js/Juego.js"></script>
+    <script type="text/javascript" src="js/Dashboard.js"></script>
+	<script type="text/javascript" src="js/actions.js"></script>
+	<script type="text/javascript" src="js/events.js"></script>
+
+
+
+</html>

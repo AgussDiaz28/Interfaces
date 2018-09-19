@@ -1,0 +1,9 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+body{
+    background-image: radial-gradient(circle, #59bcdc, #477e9c);
+}
