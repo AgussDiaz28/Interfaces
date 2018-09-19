@@ -1,4 +1,4 @@
-let tablero= new Dashboard();
+let J = null;
 
 function setEventoSimple(eventoID,listener,callback){
     document.getElementById(eventoID).addEventListener(listener,function(e){
@@ -16,24 +16,25 @@ function startGame(e){
     if (!isEmpty(nombreJugadorUno) && !isEmpty(nombreJugadorDos) ){
         let j1 = new Jugador(nombreJugadorUno,'red');
         let j2 = new Jugador(nombreJugadorDos,'yelow');
-        Juego = new Juego(j1,j2);
+        J = new Juego(j1,j2);
     }else{
         alert('Ingrese el nombre de jugador')
     }
 }
 
 function moverFicha(e) {
-
     let x = e.screenX;
     let y = e.screenY;
-    console.log(x);
-    console.log(y);
+    let activePrayer = J.getActivePlayer();
+    console.log(activePrayer);
+    let response = activePrayer.clickOwn(x,y);
+    console.log(response);
     // if ( tablero.clickCercaFicha(x,y) ){
     //     alert('hi');
     //     //tablero.levantarFicha();
     // }
-    if ( tablero.clickCercaColumna(x,y) != null ){
-        alert('hi');
-        //tablero.levantarFicha();
-    }
+//     if ( tablero.clickCercaColumna(x,y) != null ){
+//         alert('hi');
+//         //tablero.levantarFicha();
+//     }
 }
