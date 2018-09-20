@@ -7,6 +7,7 @@ function Ficha(x,y,radio,img) {
 };
 
 Ficha.prototype.clicked = function(x,y){
+    console.log(x,y);
     let response = false;
     if ( (this.x > (x - this.radio))  && (this.x < (x + this.radio)) ){
         if ( (this.y > (y - this.radio))  && (this.y < (y + this.radio)) ){

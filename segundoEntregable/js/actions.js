@@ -23,18 +23,14 @@ function startGame(e){
 }
 
 function moverFicha(e) {
-    let x = e.screenX;
-    let y = e.screenY;
+    let x = e.layerX - e.currentTarget.offsetLeft;
+    let y = e.layerY - e.currentTarget.offsetTop;
     let activePrayer = J.getActivePlayer();
-    console.log(activePrayer);
-    let response = activePrayer.clickOwn(x,y);
-    console.log(response);
-    // if ( tablero.clickCercaFicha(x,y) ){
-    //     alert('hi');
-    //     //tablero.levantarFicha();
-    // }
-//     if ( tablero.clickCercaColumna(x,y) != null ){
-//         alert('hi');
-//         //tablero.levantarFicha();
-//     }
+    // let response = activePrayer.clickOwn(x,y);
+    let columNomber = J.selectedColumn(x,y);
+    console.log(columNomber);
+    J.dropCoin(columNomber);
+
+
+
 }
