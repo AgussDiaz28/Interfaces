@@ -1,9 +1,3 @@
-function Jugador() {
-    this.name = "Jane Doe";
-    this.active = false;
-    this.color = 'red'
-};
-
 function Jugador(name,color) {
     this.name = name;
     this.active = false;
@@ -41,7 +35,6 @@ Jugador.prototype.crearFichas = function () {
         ficha.push(f);
     }
     this.fichas = ficha;
-    console.log(this);
 };
 
 Jugador.prototype.empezarTurno = function (){
@@ -65,12 +58,20 @@ Jugador.prototype.clickOwn = function (x,y) {
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
         if (fichasPropias[i].clicked(x,y)){
+            fichasPropias[i].setSelected();
             return true;
         }
     }
     return false;
 };
 
-Jugador.prototype.mensaje = function () {
-    alert('Es el turno del Jugador: '+this.name);
+Jugador.prototype.getFichaSeleccionada = function (x,y) {
+    let fichasPropias = this.fichas;
+    let size = fichasPropias.length;
+    for (var i=0;i<size;i++){
+        if (fichasPropias[i].isSelected()){
+            return fichasPropias[i];
+        }
+    }
+    return null;
 };

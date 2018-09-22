@@ -1,4 +1,3 @@
 setEventoSimple('start','click',startGame);
-
-
-setEventoSimple('canvas','click',moverFicha);
+setEventoSimple('canvas','mousedown',moverFicha);
+setEventoSimple('canvas','mouseup',dropCoin);

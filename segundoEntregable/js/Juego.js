@@ -1,41 +1,22 @@
-function Juego(j1,j2,) {
+function Juego(j1,j2,dashboard) {
     this.jugadorUno = j1;
     this.jugadorDos = j2;
-    this.posicionTablero = { x:290, y:80 };
     this.tablero = [];
-    this.tableroH = 7;
-    this.tableroW = 6;
-    this.dibujarTablero();
+    this.dashboard = dashboard;
     this.llenarMatriz();
 };
 
 Juego.prototype.llenarMatriz = function(){
-    for ( var y = 0; y < this.tableroH; y++ ) {
+    for ( var y = 0; y < this.dashboard.getCantFilas(); y++ ) {
         this.tablero[ y ] = [];
-        for ( var x = 0; x < this.tableroW; x++ ) {
+        for ( var x = 0; x < this.dashboard.getCantColumnas(); x++ ) {
             this.tablero[ y ][ x ] = null;
         }
     }
 };
 
-Juego.prototype.loadFile = function(filePath,x,y){
-    let canvas = document.getElementById("canvas").getContext("2d");
-    let image = new Image();
-    image.src = filePath;
-
-    image.onload = function(){
-        canvas.drawImage(image, x, y);
-    };
-
-};
-
-Juego.prototype.dibujarTablero = function(){
-    this.loadFile('img/edashboard.png',this.posicionTablero.x,this.posicionTablero.y);
-
-};
-
 Juego.prototype.getActivePlayer = function(){
-    if (this.jugadorUno){
+    if (this.jugadorUno.active){
         return this.jugadorUno;
     }else{
         return this.jugadorDos;
@@ -50,16 +31,16 @@ Juego.prototype.cambiarTurnos = function(){
 Juego.prototype.selectedColumn = function(x,y){
     console.log(x,y);
     let response = false;
-    let columna = null;
-    let i=0
+    let size = {height:this.dashboard.getHeight() , width:this.dashboard.getWidth()};
+    let i = 0;
     for (i;i<=7;i++){
-        if ( ((this.posicionTablero.x + columna ) > (x - 80))  && ((this.posicionTablero.x + columna )  < (x + 80)) ){
-            if ( ((this.posicionTablero.y + columna ) > (y - 80))  && ((this.posicionTablero.y + columna ) < (y + 80)) ){
+        let lowestX = x - size.width;
+        let highestX = x + size.width;
+        if ( ((this.dashboard.getX() + size.width ) > ( lowestX )) && ((this.dashboard.getX() - size.width )  < ( highestX )) ){
                 response = true;
                 break;
-            }
         }
-        columna = columna + 60;
+        size.width = size.width + this.dashboard.getHeight();
     }
     if (response){
         return i;
@@ -69,15 +50,46 @@ Juego.prototype.selectedColumn = function(x,y){
 
 };
 
-Juego.prototype.dropCoin = function(columnNumber){
-    if (columnNumber != null){
-        for (var i = 0; i<=6;i++){
-            console.log(this.tablero);
-            if (this.tablero[i][columnNumber] == null){
-                this.tablero[i][columnNumber] = this.getActivePlayer().color;
-                //this.pintarFicha();
-            };
+Juego.prototype.pintarFicha = function(ficha,x,y){
+    console.log(ficha);
+    ficha.x = x;
+    ficha.y = y;
+    ficha.render();
+};
+
+//Funcion que recibe un la fila y columna que se uso para llenar la matrix y devuelve en que posicion del canvas hay
+// que llenar
+Juego.prototype.getPositionXY = function(i,j){
+    let size = { height:this.dashboard.getHeight() , width:this.dashboard.getWidth() };
+    if (i != 0){
+        for (var x = 0; x<= i;x++){
+            size.height = size.height + this.dashboard.getHeight();
         }
+    }
+    if ( j != 0){
+        for (var y = 0; y<= j;y++){
+            size.width = size.width + this.dashboard.getWidth();
+        }
+    }
+    return {x:size.width,y:size.height}
+
+}
+
+Juego.prototype.dropCoin = function(columna){
+    let fila = this.dashboard.getCantFilas() - 1;
+    if (columna != null) {
+        for (fila; fila>=0;fila--){
+            console.log(fila);
+            if (this.tablero[fila][columna] == null) {
+                this.tablero[fila][columna] = this.getActivePlayer().color;
+                var ficha = this.getActivePlayer().getFichaSeleccionada();
+                let position = this.getPositionXY(fila,columna);
+                console.log(position);
+                this.pintarFicha(ficha,position.x,position.y);
+                break
+            }
+        }
+        this.cambiarTurnos();
     }
 };
 
