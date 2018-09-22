@@ -13,7 +13,7 @@ Jugador.prototype.setImagePath = function () {
         this.position = 0;
     }else{
         this.image.src = 'img/sfa.png';
-        this.position = 1000;
+        this.position = 950;
     }
 };
 
@@ -29,9 +29,15 @@ Jugador.prototype.loadImg = function(){
 Jugador.prototype.crearFichas = function () {
     let pos = 0;
     let ficha = [];
-    for (var i=0;i<=20;i++){
-        let f = new Ficha(this.position,pos,80,this.image);
-        pos = pos + 80;
+    for (var i=0;i<=10;i++){
+        let f = new Ficha(this.position,pos,65,this.image);
+        pos = pos + 65;
+        ficha.push(f);
+    }
+    pos = 0;
+    for (var i=0;i<=10;i++){
+        let f = new Ficha(this.position+65,pos,65,this.image);
+        pos = pos + 65;
         ficha.push(f);
     }
     this.fichas = ficha;

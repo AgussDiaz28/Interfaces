@@ -17,7 +17,7 @@ function startGame(e){
         let j1 = new Jugador(nombreJugadorUno,'red');
         let j2 = new Jugador(nombreJugadorDos,'yelow');
 
-        let dashboard = new Dashboard(6,7,290,80,'img/edashboard.png',35,35);
+        let dashboard = new Dashboard(6,7,290,80,'img/edashboard.png',40,40);
         J = new Juego(j1,j2,dashboard);
     }else{
         alert('Ingrese el nombre de jugador')

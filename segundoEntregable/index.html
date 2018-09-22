@@ -9,7 +9,7 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/paint.png">
-	<body class="center">
+	<body id="body" class="center">
         <div class="container" style="margin-top: 1%">
             <div class="row justify-content-md-center">
                 <div class="col-5 justify-content-md-right">
@@ -22,6 +22,10 @@
                 <div class="col-5" style="float: left;">
                     <label for="namep2"> Nombre Jugador 2</label> <br>
                     <input name="name" id="namep2"type="text" value="Diego"> </input>
+                </div>
+                <div class="col-5" style="float: left;">
+                    <label for="activePlayer"> Turno del Jugador: </label> <br>
+                    <span name="activePlayer" id="activePlayer" type="text"> </span>
                 </div>
             </div>
 
