@@ -58,7 +58,6 @@ Juego.prototype.pintarFicha = function(ficha,x,y){
 //Funcion que recibe un la fila y columna que se uso para llenar la matrix y devuelve en que posicion del canvas hay
 // que llenar
 Juego.prototype.getPositionXY = function(fila,columna){
-    console.log(fila,columna);
     let heightDashboard  = this.dashboard.getHeight();
     let widthDashboard    = this.dashboard.getWidth();
     let newX = this.dashboard.xPosition;
@@ -95,18 +94,59 @@ Juego.prototype.dropCoin = function(columna){
 };
 
 Juego.prototype.movimientoGanador = function(){
-    let width = 7;
-    let height = 6;
-    for (var i = height; i <= 0; i-- ){
-        for (var j = width; j <= 0; j-- ){
+    return this.checkRowsHorizontal() || this.checkRowsVertical() || this.checkRowsDiagonal();
+};
 
+Juego.prototype.checkRowsHorizontal = function(){
+    let cantFilas = this.dashboard.getCantFilas() - 1;
+    let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    let lastState = null;
+    let secuence = [];
+    for (var j = cantColumnas ; j>= 0;j--){
+        for (var i = cantFilas ; i>= 0;i--){
+            if (lastState != this.tablero[i][j] && this.tablero[i][j] != null){
+                lastState = this.tablero[i][j];
+                secuence = [];
+            }
+            if ((lastState == this.tablero[i][j] ) && lastState != null){
+                secuence.push(this.tablero[i][j]) ;
+                if (secuence.length == 4){
+                    return true;
+                }
+            }
         }
+        secuence = [];
     }
+    return false;
 };
 
-Juego.prototype.addMovement = function(coordenadas){
-    this.tablero[coordenadas.i][coordenadas.j] = coordenadas.color;
+Juego.prototype.checkRowsVertical = function(){
+    let cantFilas = this.dashboard.getCantFilas() - 1;
+    let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    let lastState = null;
+    let secuence = [];
+    for (var i = cantFilas ; i>= 0;i--){
+        for (var j = cantColumnas ; j>= 0;j--){
+            if (lastState != this.tablero[i][j] && this.tablero[i][j] != null){
+                lastState = this.tablero[i][j];
+                secuence = [];
+            }
+            if ((lastState == this.tablero[i][j] ) && lastState != null){
+                secuence.push(this.tablero[i][j]) ;
+                if (secuence.length == 4){
+                    return true;
+                }
+            }
+        }
+        secuence = [];
+    }
+    return false;
 };
+
+Juego.prototype.checkRowsDiagonal = function(){
+    return false;
+};
+
 
 
 

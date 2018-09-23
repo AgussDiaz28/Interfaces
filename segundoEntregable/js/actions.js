@@ -30,7 +30,7 @@ function moverFicha(e) {
     let activePrayer = J.getActivePlayer();
     let response = activePrayer.clickOwn(x,y);
     if (response){
-        console.log('Selecionada la ficha');
+        //console.log('Selecionada la ficha');
     }
 }
 
@@ -40,6 +40,7 @@ function dropCoin(e){
     let columnNumber = J.selectedColumn(x,y);
     if (columnNumber != null){
         J.dropCoin(columnNumber);
+        console.log(J.movimientoGanador());
     }else{
         J.getActivePlayer().getFichaSeleccionada().setUnselected();
     }
