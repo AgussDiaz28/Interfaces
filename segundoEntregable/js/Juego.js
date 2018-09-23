@@ -147,6 +147,20 @@ Juego.prototype.checkRowsDiagonal = function(){
     return false;
 };
 
+Juego.prototype.dragCoin = function(x,y){
+    let c = document.getElementById("canvas");
+    let ctx = c.getContext("2d");
+
+    ctx.clearRect(0, 0, 1100, 1000);
+    canvas.putImageData(imageData, 0, 0);
+
+   let activeCoin = this.getActivePlayer().getFichaSeleccionada();
+   activeCoin.x = x;
+   activeCoin.y = y;
+
+    ctx.drawImage(activeCoin.img, activeCoin.x , activeCoin.y);
+};
+
 
 
 

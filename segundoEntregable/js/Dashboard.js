@@ -4,6 +4,7 @@ function Dashboard(filas,columnas,xPosition,yPosition,filePath,sloth,slotw) {
     this.xPosition = xPosition;
     this.yPosition = yPosition;
     this.filePath = filePath;
+    this.origialID = null;
     this.slot = {h:sloth,w:slotw};
     this.render();
 };
@@ -15,6 +16,7 @@ Dashboard.prototype.render = function(){
     let own = this;
     image.onload = function(){
         canvas.drawImage(image, own.xPosition, own.yPosition);
+        this.imageData = canvas.getImageData(0,0,canvas.width,canvas.height);
     };
 };
 

@@ -24,13 +24,14 @@ function startGame(e){
     }
 }
 
-function moverFicha(e) {
+function clickFicha(e) {
     let x = e.layerX - e.currentTarget.offsetLeft;
     let y = e.layerY - e.currentTarget.offsetTop;
+    console.log(x,y);
     let activePrayer = J.getActivePlayer();
     let response = activePrayer.clickOwn(x,y);
     if (response){
-        //console.log('Selecionada la ficha');
+       // J.dragCoin(x,y);
     }
 }
 

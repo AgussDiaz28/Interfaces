@@ -7,6 +7,10 @@ function Jugador(name,color) {
     this.loadImg();
 };
 
+Jugador.prototype.getName = function(){
+    return this.name;
+}
+
 Jugador.prototype.setImagePath = function () {
     if (this.color == 'red'){
         this.image.src = 'img/sfr.png';
@@ -29,15 +33,15 @@ Jugador.prototype.loadImg = function(){
 Jugador.prototype.crearFichas = function () {
     let pos = 0;
     let ficha = [];
-    for (var i=0;i<=10;i++){
-        let f = new Ficha(this.position,pos,65,this.image);
-        pos = pos + 65;
+    for (var i=0;i<8;i++){
+        let f = new Ficha(this.position,pos,90,this.image);
+        pos = pos + 90;
         ficha.push(f);
     }
     pos = 0;
-    for (var i=0;i<=10;i++){
-        let f = new Ficha(this.position+65,pos,65,this.image);
-        pos = pos + 65;
+    for (var i=0;i<8;i++){
+        let f = new Ficha(this.position+90,pos,90,this.image);
+        pos = pos + 90;
         ficha.push(f);
     }
     this.fichas = ficha;

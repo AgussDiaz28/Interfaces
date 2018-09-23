@@ -1,5 +1,7 @@
 setEventoSimple('start','click',startGame);
-setEventoSimple('canvas','mousedown',moverFicha);
+setEventoSimple('canvas','mousedown',clickFicha);
+//setEventoSimple('canvas','mousemove',clickFicha);
+// setEventoSimple('canvas','mousemove',moverFicha);
 setEventoSimple('canvas','mouseup',dropCoin);
 // setEventoSimple('body','click',function () {
 //     let activePrayer = J.getActivePlayer();
