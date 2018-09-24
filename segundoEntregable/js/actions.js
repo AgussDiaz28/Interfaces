@@ -29,7 +29,7 @@ function clickFicha(e) {
     let y = e.layerY - e.currentTarget.offsetTop;
     let activePrayer = J.getActivePlayer();
     activePrayer.clickOwn(x,y);
-
+    J.saveNewImageData();
 }
 
 function dropCoin(e){

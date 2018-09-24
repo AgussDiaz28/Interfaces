@@ -7,6 +7,10 @@ function Juego(j1,j2,dashboard) {
     this.dashboard.saveNewImageData();
 };
 
+Juego.prototype.saveNewImageData = function() {
+    this.dashboard.saveNewImageData();
+}
+
 Juego.prototype.llenarMatriz = function(){
     for ( var y = 0; y < this.dashboard.getCantFilas(); y++ ) {
         this.tablero[ y ] = [];
