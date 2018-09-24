@@ -11,6 +11,7 @@ Ficha.prototype.clicked = function(x,y){
     let response = false;
     if ( (this.x > (x - this.radio))  && (this.x < (x + this.radio)) ){
         if ( (this.y > (y - this.radio))  && (this.y < (y + this.radio)) ){
+            this.setSelected();
             response = true;
             this.errase();
         }
@@ -25,7 +26,7 @@ Ficha.prototype.render = function () {
 
 Ficha.prototype.errase = function(){
         let c = document.getElementById('canvas');
-        let ctx = document.getElementById('canvas').getContext('2d');
+        let ctx = c.getContext('2d');
         ctx.beginPath();
         ctx.globalCompositeOperation = "destination-out";
         ctx.arc(this.x + 40 , this.y  + 40 , this.radio /2, 0, Math.PI * 2);

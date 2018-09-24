@@ -5,7 +5,7 @@ function Dashboard(filas,columnas,xPosition,yPosition,filePath,sloth,slotw) {
     this.yPosition = yPosition;
     this.filePath = filePath;
     this.imageData = null;
-    this.slot = {h:sloth,w:slotw};
+    this.slot = { h:sloth,w:slotw };
     this.render();
 };
 
@@ -16,9 +16,13 @@ Dashboard.prototype.render = function(){
     let own = this;
     image.onload = function(){
         canvas.drawImage(image, own.xPosition, own.yPosition);
-        //this.imageData = canvas.getImageData(0,0,canvas.width,canvas.height);
     };
 };
+
+Dashboard.prototype.saveNewImageData = function(){
+    let canvas = document.getElementById("canvas").getContext("2d");
+    this.imageData = canvas.getImageData(0,0,1100,750);
+}
 
 Dashboard.prototype.getCantFilas = function () {
     return this.filas;

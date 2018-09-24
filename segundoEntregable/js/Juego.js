@@ -4,6 +4,7 @@ function Juego(j1,j2,dashboard) {
     this.tablero = [];
     this.dashboard = dashboard;
     this.llenarMatriz();
+    this.dashboard.saveNewImageData();
 };
 
 Juego.prototype.llenarMatriz = function(){
@@ -84,10 +85,13 @@ Juego.prototype.dropCoin = function(columna){
                 this.tablero[fila][columna] = this.getActivePlayer().color;
                 var ficha = this.getActivePlayer().getFichaSeleccionada();
                 let position = this.getPositionXY(fila,columna);
+                ficha.errase();
                 this.pintarFicha(ficha,position.x,position.y);
+                ficha.setUsed();
                 break
             }
         }
+        this.dashboard.saveNewImageData();
     }
 };
 
@@ -142,15 +146,36 @@ Juego.prototype.checkRowsVertical = function(){
 };
 
 Juego.prototype.checkRowsDiagonal = function(){
+
+    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    // let lastState = null;
+    // let secuence = [];
+    // for (var i = 0 ; i< cantColumnas;i++){
+    //     for (var j = 0 ; j< i;j++){
+    //         if (lastState != this.tablero[i-j][j] && this.tablero[i-j][j] != null){
+    //             lastState = this.tablero[i-j][j];
+    //             secuence = [];
+    //         }
+    //         if ((lastState == this.tablero[i-j][j] ) && lastState != null){
+    //             secuence.push(this.tablero[i-j][j]) ;
+    //             if (secuence.length == 4){
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     secuence = [];
+    // }
     return false;
 };
 
 Juego.prototype.dragCoin = function(x,y){
+    //this.dashboard.saveNewImageData();
     let c = document.getElementById("canvas");
     let ctx = c.getContext("2d");
 
-    ctx.clearRect(0, 0, 1100, 1000);
-    canvas.putImageData(imageData, 0, 0);
+    ctx.clearRect(0, 0, 1100, 750);
+    let imageData = this.dashboard.imageData;
+    ctx.putImageData(imageData, 0, 0);
 
    let activeCoin = this.getActivePlayer().getFichaSeleccionada();
    activeCoin.x = x;

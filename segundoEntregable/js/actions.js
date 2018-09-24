@@ -28,12 +28,8 @@ function clickFicha(e) {
     let x = e.layerX - e.currentTarget.offsetLeft;
     let y = e.layerY - e.currentTarget.offsetTop;
     let activePrayer = J.getActivePlayer();
-    let response = activePrayer.clickOwn(x,y);
-    if (response){
-        // document.getElementById('canvas').addEventListener('mousemove',function(e){
-        //     J.dragCoin(x,y);
-        // });
-    }
+    activePrayer.clickOwn(x,y);
+
 }
 
 function dropCoin(e){
