@@ -17,7 +17,7 @@ function startGame(e){
         let j1 = new Jugador(nombreJugadorUno,'red');
         let j2 = new Jugador(nombreJugadorDos,'yelow');
 
-        let dashboard = new Dashboard(6,7,290,80,'img/edashboard.png',40,40);
+        let dashboard = new Dashboard(6,7,290,160,'img/edashboard.png',36,36);
         J = new Juego(j1,j2,dashboard);
     }else{
         alert('Ingrese el nombre de jugador')
@@ -27,11 +27,12 @@ function startGame(e){
 function clickFicha(e) {
     let x = e.layerX - e.currentTarget.offsetLeft;
     let y = e.layerY - e.currentTarget.offsetTop;
-    console.log(x,y);
     let activePrayer = J.getActivePlayer();
     let response = activePrayer.clickOwn(x,y);
     if (response){
-       // J.dragCoin(x,y);
+        // document.getElementById('canvas').addEventListener('mousemove',function(e){
+        //     J.dragCoin(x,y);
+        // });
     }
 }
 
@@ -42,8 +43,11 @@ function dropCoin(e){
     if (columnNumber != null){
         J.dropCoin(columnNumber);
         console.log(J.movimientoGanador());
+        J.cambiarTurnos();
     }else{
+        J.getActivePlayer().getFichaSeleccionada().render();
         J.getActivePlayer().getFichaSeleccionada().setUnselected();
+
     }
 
 }

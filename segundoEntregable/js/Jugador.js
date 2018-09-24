@@ -64,7 +64,7 @@ Jugador.prototype.cambiarTurno = function(){
 };
 
 Jugador.prototype.clickOwn = function (x,y) {
-    fichasPropias = this.fichas;
+    let fichasPropias = this.fichas;
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
         if (fichasPropias[i].clicked(x,y)){

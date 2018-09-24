@@ -32,14 +32,16 @@ Juego.prototype.selectedColumn = function(x,y){
     let response = false;
     let size = {height:this.dashboard.getHeight() , width:this.dashboard.getWidth()};
     let i = 0;
-    for (i;i<=7;i++){
-        let lowestX = x - size.width;
-        let highestX = x + size.width;
-        if ( ((this.dashboard.getX() + size.width ) > ( lowestX )) && ((this.dashboard.getX() - size.width )  < ( highestX )) ){
-                response = true;
-                break;
+    if (y > this.dashboard.getHeight() && x > this.dashboard.getWidth()){
+        for (i;i<=7;i++){
+            let lowestX = x - size.width;
+            let highestX = x + size.width;
+                if ( ((this.dashboard.getX() + size.width ) > ( lowestX )) && ((this.dashboard.getX() - size.width )  < ( highestX )) ){
+                    response = true;
+                    break;
+                }
+            size.width = size.width + this.dashboard.getHeight();
         }
-        size.width = size.width + this.dashboard.getHeight();
     }
     if (response){
         return i;
@@ -50,9 +52,11 @@ Juego.prototype.selectedColumn = function(x,y){
 };
 
 Juego.prototype.pintarFicha = function(ficha,x,y){
-    ficha.x = x;
-    ficha.y = y;
-    ficha.render();
+    if (ficha != null){
+        ficha.x = x;
+        ficha.y = y;
+        ficha.render();
+    }
 };
 
 //Funcion que recibe un la fila y columna que se uso para llenar la matrix y devuelve en que posicion del canvas hay
@@ -60,21 +64,16 @@ Juego.prototype.pintarFicha = function(ficha,x,y){
 Juego.prototype.getPositionXY = function(fila,columna){
     let heightDashboard  = this.dashboard.getHeight();
     let widthDashboard    = this.dashboard.getWidth();
-    let newX = this.dashboard.xPosition;
-    let newY = this.dashboard.yPosition;
-    if (fila != 0){
-        for (var x = 0; x<= fila;x++){
-            newY = newY + heightDashboard;
-        }
+    let newX = this.dashboard.xPosition - this.dashboard.getHeight() - 40;
+    let newY = this.dashboard.yPosition - this.dashboard.getHeight() - 28;
+    for (var x = 0; x<= fila;x++){
+        newY = newY + widthDashboard+ widthDashboard ;
     }
-    if ( columna != 0){
-        for (var y = 0; y<= columna;y++){
-            newX = newX + widthDashboard;
+    for (var y = 0; y<= columna;y++){
+        newX = newX + heightDashboard + heightDashboard;
+    }
 
-        }
-    }
     return {    x: newX , y: newY };
-
 }
 
 Juego.prototype.dropCoin = function(columna){
@@ -89,7 +88,6 @@ Juego.prototype.dropCoin = function(columna){
                 break
             }
         }
-        this.cambiarTurnos();
     }
 };
 
