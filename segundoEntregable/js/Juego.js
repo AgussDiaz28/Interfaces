@@ -3,9 +3,14 @@ function Juego(j1,j2,dashboard) {
     this.jugadorDos = j2;
     this.tablero = [];
     this.dashboard = dashboard;
+    this.init();
+};
+
+Juego.prototype.init = function(){
     this.llenarMatriz();
     this.dashboard.saveNewImageData();
-};
+    this.jugadorUno.empezarTurno();
+}
 
 Juego.prototype.saveNewImageData = function() {
     this.dashboard.saveNewImageData();
@@ -37,7 +42,7 @@ Juego.prototype.selectedColumn = function(x,y){
     let response = false;
     let size = {height:this.dashboard.getHeight() , width:this.dashboard.getWidth()};
     let i = 0;
-    if (y > this.dashboard.getHeight() && x > this.dashboard.getWidth()){
+    if (y < this.dashboard.getY() && x > this.dashboard.getX()){
         for (i;i<=7;i++){
             let lowestX = x - size.width;
             let highestX = x + size.width;
@@ -174,12 +179,13 @@ Juego.prototype.checkRowsDiagonal = function(){
     return false;
 };
 
-Juego.prototype.putLastImageData = function(){
-    let c = document.getElementById("canvas");
-    let ctx = c.getContext("2d");
+Juego.prototype.cleanCanvas =function() {
+    document.getElementById("canvas").getContext("2d").clearRect(0, 0, 1100, 750);
+};
 
-    ctx.clearRect(0, 0, 1100, 750);
-    ctx.putImageData(this.dashboard.imageData, 0, 0);
+Juego.prototype.putLastImageData = function(){
+    this.cleanCanvas();
+    document.getElementById("canvas").getContext("2d").putImageData(this.dashboard.imageData, 0, 0);
 };
 
 Juego.prototype.dragCoin = function(x,y){
@@ -192,6 +198,11 @@ Juego.prototype.dragCoin = function(x,y){
 };
 
 
-
+Juego.prototype.reset = function () {
+    this.cleanCanvas();
+    this.jugadorUno.reset();
+    this.jugadorDos.reset();
+    this.init();
+}
 
 

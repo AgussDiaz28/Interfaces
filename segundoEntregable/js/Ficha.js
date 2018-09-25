@@ -1,6 +1,8 @@
 function Ficha(x,y,radio,img) {
     this.x = x;
     this.y = y;
+    this.xOrigin = x;
+    this.yOrigin = y;
     this.radio = radio;
     this.img = img;
     this.estado = { selected:false, used:false };
@@ -18,6 +20,11 @@ Ficha.prototype.clicked = function(x,y){
     }
     return response;
 };
+
+Ficha.prototype.renderOrigin = function(){
+    let canvas = document.getElementById("canvas").getContext("2d");
+    canvas.drawImage(this.img, this.xOrigin, this.yOrigin);
+}
 
 Ficha.prototype.render = function () {
     let canvas = document.getElementById("canvas").getContext("2d");

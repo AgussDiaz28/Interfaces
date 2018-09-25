@@ -9,7 +9,7 @@ function Jugador(name,color) {
 
 Jugador.prototype.getName = function(){
     return this.name;
-}
+};
 
 Jugador.prototype.setImagePath = function () {
     if (this.color == 'red'){
@@ -48,6 +48,7 @@ Jugador.prototype.crearFichas = function () {
 };
 
 Jugador.prototype.empezarTurno = function (){
+    document.getElementById("activePlayer").innerHTML = this.getName();
     this.active = true;
 };
 
@@ -75,7 +76,7 @@ Jugador.prototype.clickOwn = function (x,y) {
     return false;
 };
 
-Jugador.prototype.getFichaSeleccionada = function (x,y) {
+Jugador.prototype.getFichaSeleccionada = function () {
     let fichasPropias = this.fichas;
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
@@ -84,4 +85,9 @@ Jugador.prototype.getFichaSeleccionada = function (x,y) {
         }
     }
     return null;
+};
+
+Jugador.prototype.reset = function () {
+    this.fichas = null;
+    this.crearFichas();
 };
