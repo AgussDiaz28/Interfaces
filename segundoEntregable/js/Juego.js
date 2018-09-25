@@ -86,16 +86,18 @@ Juego.prototype.dropCoin = function(columna){
     if (columna != null) {
         for (fila; fila>=0;fila--){
             if (this.tablero[fila][columna] == null) {
-                this.tablero[fila][columna] = this.getActivePlayer().color;
-                var ficha = this.getActivePlayer().getFichaSeleccionada();
-                let position = this.getPositionXY(fila,columna);
-                ficha.errase();
-                this.pintarFicha(ficha,position.x,position.y);
-                ficha.setUsed();
+                let ficha = this.getActivePlayer().getFichaSeleccionada();
+                if (ficha != null){
+                    let position = this.getPositionXY(fila,columna);
+                    this.putLastImageData();
+                    this.pintarFicha(ficha,position.x,position.y);
+                    ficha.setUsed();
+                    ficha.setUnselected();
+                    this.tablero[fila][columna] = this.getActivePlayer().color;
+                }
                 break
             }
         }
-        this.dashboard.saveNewImageData();
     }
 };
 
@@ -172,20 +174,21 @@ Juego.prototype.checkRowsDiagonal = function(){
     return false;
 };
 
-Juego.prototype.dragCoin = function(x,y){
-    //this.dashboard.saveNewImageData();
+Juego.prototype.putLastImageData = function(){
     let c = document.getElementById("canvas");
     let ctx = c.getContext("2d");
 
     ctx.clearRect(0, 0, 1100, 750);
-    let imageData = this.dashboard.imageData;
-    ctx.putImageData(imageData, 0, 0);
+    ctx.putImageData(this.dashboard.imageData, 0, 0);
+};
 
-   let activeCoin = this.getActivePlayer().getFichaSeleccionada();
-   activeCoin.x = x;
-   activeCoin.y = y;
+Juego.prototype.dragCoin = function(x,y){
 
-    ctx.drawImage(activeCoin.img, activeCoin.x , activeCoin.y);
+    this.putLastImageData();
+    let activeCoin = this.getActivePlayer().getFichaSeleccionada();
+    activeCoin.x = x;
+    activeCoin.y = y;
+    activeCoin.render();
 };
 
 
