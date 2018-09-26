@@ -4,7 +4,7 @@ function setEventoSimple(eventoID,listener,callback){
     document.getElementById(eventoID).addEventListener(listener,function(e){
         callback(e);
     });
-}
+};
 
 setEventoSimple('start','click',startGame);
 setEventoSimple('canvas','mousedown',clickCoin);
@@ -21,8 +21,7 @@ function startGame(){
     if (!isEmpty(nombreJugadorUno) && !isEmpty(nombreJugadorDos) ){
         let j1 = new Jugador(nombreJugadorUno,'red');
         let j2 = new Jugador(nombreJugadorDos,'yelow');
-        let dashboard = new Dashboard(6,7,290,160,'img/edashboard.png',36,36);
-        J = new Juego(j1,j2,dashboard);
+        J = new Juego(j1,j2);
     }else{
         alert('Ingrese el nombre de jugador')
     }
@@ -40,11 +39,15 @@ function dropCoin(e){
     let x = e.layerX - e.currentTarget.offsetLeft;
     let y = e.layerY - e.currentTarget.offsetTop;
     let columnNumber = J.selectedColumn(x,y);
-    console.log(columnNumber);
     if (columnNumber != null){
         J.dropCoin(columnNumber);
-        console.log(J.movimientoGanador());
-        J.cambiarTurnos();
+        if (J.movimientoGanador()){
+            document.getElementById("ganador").innerHTML = "El jugador ganador fue: " + J.getActivePlayer().getName();
+            setTimeout(function () {   J.reset(); },2000);
+
+        }else{
+            J.cambiarTurnos();
+        }
     }else{
         J.putLastImageData();
         J.getActivePlayer().getFichaSeleccionada().renderOrigin();
@@ -58,7 +61,7 @@ function dragCoin(e) {
         let activePlayer = J.getActivePlayer();
         if (activePlayer != null){
             let ficha = activePlayer.getFichaSeleccionada();
-            if (ficha != null && ficha.estado.selected == true ){
+            if (ficha != null && (ficha.isSelected() == true) ){
                 let x = e.layerX - e.currentTarget.offsetLeft;
                 let y = e.layerY - e.currentTarget.offsetTop;
                 J.dragCoin(x,y);

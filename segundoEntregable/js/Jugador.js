@@ -68,7 +68,7 @@ Jugador.prototype.clickOwn = function (x,y) {
     let fichasPropias = this.fichas;
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
-        if (fichasPropias[i].clicked(x,y) && !(fichasPropias[i].wasUsed())){
+        if (fichasPropias[i].clicked(x,y)){
             fichasPropias[i].setSelected();
             return true;
         }

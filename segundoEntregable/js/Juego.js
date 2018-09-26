@@ -1,12 +1,13 @@
-function Juego(j1,j2,dashboard) {
+function Juego(j1,j2) {
     this.jugadorUno = j1;
     this.jugadorDos = j2;
     this.tablero = [];
-    this.dashboard = dashboard;
+    this.dashboard = null;
     this.init();
 };
 
 Juego.prototype.init = function(){
+    this.dashboard = new Dashboard(6,7,290,160,'img/edashboard.png',36,36);;
     this.llenarMatriz();
     this.dashboard.saveNewImageData();
     this.jugadorUno.empezarTurno();
@@ -117,15 +118,16 @@ Juego.prototype.checkRowsHorizontal = function(){
     let secuence = [];
     for (var j = cantColumnas ; j>= 0;j--){
         for (var i = cantFilas ; i>= 0;i--){
-            if (lastState != this.tablero[i][j] && this.tablero[i][j] != null){
-                lastState = this.tablero[i][j];
-                secuence = [];
-            }
-            if ((lastState == this.tablero[i][j] ) && lastState != null){
-                secuence.push(this.tablero[i][j]) ;
+            let celdaActual = this.tablero[i][j];
+            if ( (lastState == celdaActual) && lastState != null){
+                secuence.push(celdaActual) ;
                 if (secuence.length == 4){
                     return true;
                 }
+            }else{
+                lastState = celdaActual;
+                secuence = [];
+                secuence.push(celdaActual) ;
             }
         }
         secuence = [];
@@ -140,14 +142,41 @@ Juego.prototype.checkRowsVertical = function(){
     let secuence = [];
     for (var i = cantFilas ; i>= 0;i--){
         for (var j = cantColumnas ; j>= 0;j--){
-            if (lastState != this.tablero[i][j] && this.tablero[i][j] != null){
-                lastState = this.tablero[i][j];
-                secuence = [];
-            }
-            if ((lastState == this.tablero[i][j] ) && lastState != null){
-                secuence.push(this.tablero[i][j]) ;
+            let celdaActual = this.tablero[i][j];
+            if ( (lastState == celdaActual) && lastState != null){
+                secuence.push(celdaActual) ;
                 if (secuence.length == 4){
                     return true;
+                }
+            }else{
+                lastState = celdaActual;
+                secuence = [];
+                secuence.push(celdaActual) ;
+            }
+        }
+        secuence = [];
+    }
+    return false;
+};
+
+Juego.prototype.getDiagonalIzqDer = function(col){
+    let cantFilas = this.dashboard.getCantFilas() - 1;
+    let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    let lastState = null;
+    let secuence = [];
+    for (var j = cantColumnas+1 ; j>= 0;j--){
+        for (var i = cantFilas+1 ; i>= 0;i--){
+            if (i-1 >= 0 && j-1 >=0){
+                let celdaActual = this.tablero[i-1][j-1];
+                if ( (lastState == celdaActual) && lastState != null){
+                    secuence.push(celdaActual) ;
+                    if (secuence.length == 4){
+                        return true;
+                    }
+                }else{
+                    lastState = celdaActual;
+                    secuence = [];
+                    secuence.push(celdaActual) ;
                 }
             }
         }
@@ -157,26 +186,7 @@ Juego.prototype.checkRowsVertical = function(){
 };
 
 Juego.prototype.checkRowsDiagonal = function(){
-
-    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
-    // let lastState = null;
-    // let secuence = [];
-    // for (var i = 0 ; i< cantColumnas;i++){
-    //     for (var j = 0 ; j< i;j++){
-    //         if (lastState != this.tablero[i-j][j] && this.tablero[i-j][j] != null){
-    //             lastState = this.tablero[i-j][j];
-    //             secuence = [];
-    //         }
-    //         if ((lastState == this.tablero[i-j][j] ) && lastState != null){
-    //             secuence.push(this.tablero[i-j][j]) ;
-    //             if (secuence.length == 4){
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     secuence = [];
-    // }
-    return false;
+    return this.getDiagonalIzqDer();
 };
 
 Juego.prototype.cleanCanvas =function() {
@@ -189,7 +199,6 @@ Juego.prototype.putLastImageData = function(){
 };
 
 Juego.prototype.dragCoin = function(x,y){
-
     this.putLastImageData();
     let activeCoin = this.getActivePlayer().getFichaSeleccionada();
     activeCoin.x = x;
@@ -203,6 +212,4 @@ Juego.prototype.reset = function () {
     this.jugadorUno.reset();
     this.jugadorDos.reset();
     this.init();
-}
-
-
+};
