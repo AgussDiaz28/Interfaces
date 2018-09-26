@@ -7,7 +7,7 @@ function Juego(j1,j2) {
 };
 
 Juego.prototype.init = function(){
-    this.dashboard = new Dashboard(6,7,290,160,'img/edashboard.png',36,36);;
+    this.dashboard = new Dashboard(6,7,300,140,'img/edashboard.png',36,36);;
     this.llenarMatriz();
     this.dashboard.saveNewImageData();
     this.jugadorUno.empezarTurno();

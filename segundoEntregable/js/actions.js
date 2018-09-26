@@ -36,7 +36,7 @@ function startGame(){
     let nombreJugadorDos = $('#namep2').val();
     if (!isEmpty(nombreJugadorUno) && !isEmpty(nombreJugadorDos) ){
         let j1 = new Jugador(nombreJugadorUno,'red');
-        let j2 = new Jugador(nombreJugadorDos,'yelow');
+        let j2 = new Jugador(nombreJugadorDos,'yellow');
         J = new Juego(j1,j2);
     }else{
         alert('Ingrese el nombre de jugador')
@@ -59,7 +59,8 @@ function dropCoin(e){
         J.dropCoin(columnNumber);
         if (J.movimientoGanador()){
             document.getElementById("ganador").innerHTML = "El jugador ganador fue: " + J.getActivePlayer().getName();
-            setTimeout(function () {   J.reset(); },2000);
+            document.getElementById("activePlayer").innerHTML = "";
+            setTimeout(function () {   J.reset(); },4000);
         }else{
             J.cambiarTurnos();
         }

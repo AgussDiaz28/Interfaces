@@ -10,6 +10,9 @@ function Jugador(name,color) {
 Jugador.prototype.getName = function(){
     return this.name;
 };
+Jugador.prototype.getColor = function(){
+    return this.color;
+};
 
 Jugador.prototype.setImagePath = function () {
     if (this.color == 'red'){
@@ -17,7 +20,7 @@ Jugador.prototype.setImagePath = function () {
         this.position = 0;
     }else{
         this.image.src = 'img/sfa.png';
-        this.position = 950;
+        this.position = 860;
     }
 };
 
@@ -33,15 +36,21 @@ Jugador.prototype.loadImg = function(){
 Jugador.prototype.crearFichas = function () {
     let pos = 0;
     let ficha = [];
-    for (var i=0;i<8;i++){
-        let f = new Ficha(this.position,pos,90,this.image);
+    for (var i=0;i<7;i++){
+        let f = new Ficha(this.position,pos,80,this.image);
+        pos = pos + 80;
+        ficha.push(f);
+    }
+    pos = 0;
+    for (var i=0;i<7;i++){
+        let f = new Ficha(this.position+80,pos,80,this.image);
         pos = pos + 90;
         ficha.push(f);
     }
     pos = 0;
-    for (var i=0;i<8;i++){
-        let f = new Ficha(this.position+90,pos,90,this.image);
-        pos = pos + 90;
+    for (var i=0;i<7;i++){
+        let f = new Ficha(this.position+160,pos,80,this.image);
+        pos = pos + 80;
         ficha.push(f);
     }
     this.fichas = ficha;
@@ -49,6 +58,10 @@ Jugador.prototype.crearFichas = function () {
 
 Jugador.prototype.empezarTurno = function (){
     document.getElementById("activePlayer").innerHTML = this.getName();
+    document.getElementById("activePlayer").style.color = this.color;
+
+
+    console.log(this.color);
     this.active = true;
 };
 

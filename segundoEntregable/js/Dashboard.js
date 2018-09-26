@@ -21,7 +21,7 @@ Dashboard.prototype.render = function(){
 
 Dashboard.prototype.saveNewImageData = function(){
     let canvas = document.getElementById("canvas").getContext("2d");
-    this.imageData = canvas.getImageData(0,0,1100,750);
+    this.imageData = canvas.getImageData(0,0,1100,700);
 }
 
 Dashboard.prototype.getCantFilas = function () {

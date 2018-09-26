@@ -36,7 +36,7 @@ Ficha.prototype.errase = function(){
         let ctx = c.getContext('2d');
         ctx.beginPath();
         ctx.globalCompositeOperation = "destination-out";
-        ctx.arc(this.x + 40 , this.y  + 40 , this.radio /2, 0, Math.PI * 2);
+        ctx.arc(this.x + 30 , this.y  + 30 , this.radio /2, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
         ctx.globalCompositeOperation = "source-over";
