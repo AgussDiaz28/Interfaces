@@ -213,4 +213,5 @@ Juego.prototype.reset = function () {
     this.jugadorDos.reset();
     this.init();
     document.getElementById("ganador").innerHTML = "";
+    document.getElementById("labelActivePlayer").innerHTML = "Turno del Jugador: ";
 };

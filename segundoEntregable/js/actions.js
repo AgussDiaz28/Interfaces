@@ -32,6 +32,9 @@ function isEmpty(q){
 }
 
 function startGame(){
+    if (J != null){
+        J.reset();
+    }
     let nombreJugadorUno = $('#namep1').val();
     let nombreJugadorDos = $('#namep2').val();
     if (!isEmpty(nombreJugadorUno) && !isEmpty(nombreJugadorDos) ){
@@ -59,8 +62,10 @@ function dropCoin(e){
         J.dropCoin(columnNumber);
         if (J.movimientoGanador()){
             document.getElementById("ganador").innerHTML = "El jugador ganador fue: " + J.getActivePlayer().getName();
+            document.getElementById("ganador").style.color = J.getActivePlayer().getColor();
             document.getElementById("activePlayer").innerHTML = "";
-            setTimeout(function () {   J.reset(); },4000);
+            document.getElementById("labelActivePlayer").innerHTML = "";
+            setTimeout(function () { J.reset(); },5000);
         }else{
             J.cambiarTurnos();
         }

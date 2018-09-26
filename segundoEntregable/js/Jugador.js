@@ -59,9 +59,6 @@ Jugador.prototype.crearFichas = function () {
 Jugador.prototype.empezarTurno = function (){
     document.getElementById("activePlayer").innerHTML = this.getName();
     document.getElementById("activePlayer").style.color = this.color;
-
-
-    console.log(this.color);
     this.active = true;
 };
 
