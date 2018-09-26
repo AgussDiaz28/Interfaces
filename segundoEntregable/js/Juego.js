@@ -212,4 +212,5 @@ Juego.prototype.reset = function () {
     this.jugadorUno.reset();
     this.jugadorDos.reset();
     this.init();
+    document.getElementById("ganador").innerHTML = "";
 };

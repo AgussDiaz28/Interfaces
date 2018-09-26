@@ -1,5 +1,21 @@
 let J = null;
 
+$.fn.pressEnter = function(fn) {
+    return this.each(function() {
+        $(this).bind('enterPress', fn);
+        $(this).keyup(function(e){
+            if(e.keyCode == 13)
+            {
+                $(this).trigger("enterPress");
+            }
+        })
+    });
+};
+
+$('body').pressEnter(function() {
+    startGame();
+});
+
 function setEventoSimple(eventoID,listener,callback){
     document.getElementById(eventoID).addEventListener(listener,function(e){
         callback(e);
@@ -39,19 +55,20 @@ function dropCoin(e){
     let x = e.layerX - e.currentTarget.offsetLeft;
     let y = e.layerY - e.currentTarget.offsetTop;
     let columnNumber = J.selectedColumn(x,y);
-    if (columnNumber != null){
+    if (columnNumber != null && J.getActivePlayer().getFichaSeleccionada() != null ){
         J.dropCoin(columnNumber);
         if (J.movimientoGanador()){
             document.getElementById("ganador").innerHTML = "El jugador ganador fue: " + J.getActivePlayer().getName();
             setTimeout(function () {   J.reset(); },2000);
-
         }else{
             J.cambiarTurnos();
         }
     }else{
         J.putLastImageData();
-        J.getActivePlayer().getFichaSeleccionada().renderOrigin();
-        J.getActivePlayer().getFichaSeleccionada().setUnselected();
+        if (J.getActivePlayer().getFichaSeleccionada() != null){
+            J.getActivePlayer().getFichaSeleccionada().renderOrigin();
+            J.getActivePlayer().getFichaSeleccionada().setUnselected();
+        }
     }
     J.saveNewImageData();
 }
