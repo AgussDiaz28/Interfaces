@@ -10,6 +10,7 @@ function Ficha(x,y,radio,img) {
 };
 
 Ficha.prototype.clicked = function(x,y){
+    console.log(x,y,this);
     let response = false;
     if (!this.inUse()){
         if ( (this.x > (x - this.radio))  && (this.x < (x + this.radio)) ){
@@ -26,6 +27,8 @@ Ficha.prototype.clicked = function(x,y){
 Ficha.prototype.renderOrigin = function(){
     this.setUnselected();
     this.estado.used = false;
+    this.x = this.xOrigin;
+    this.y = this.yOrigin;
     let canvas = document.getElementById("canvas").getContext("2d");
     canvas.drawImage(this.img, this.xOrigin, this.yOrigin);
 
