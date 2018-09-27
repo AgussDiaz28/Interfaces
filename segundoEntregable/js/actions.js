@@ -73,7 +73,6 @@ function dropCoin(e){
         J.putLastImageData();
         if (J.getActivePlayer().getFichaSeleccionada() != null){
             J.getActivePlayer().getFichaSeleccionada().renderOrigin();
-            J.getActivePlayer().getFichaSeleccionada().setUnselected();
         }
     }
     J.saveNewImageData();

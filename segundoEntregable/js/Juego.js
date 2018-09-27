@@ -159,36 +159,39 @@ Juego.prototype.checkRowsVertical = function(){
     return false;
 };
 
-Juego.prototype.getDiagonalIzqDer = function(){
+Juego.prototype.getDiagonalIzq = function(){
     // let cantFilas = this.dashboard.getCantFilas() - 1;
     // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
-    // let lastState = null;
-    // let secuence = [];
-    // for (var j = cantColumnas ; j>= 0;j--){
-    //     for (var i = cantFilas; i>= 0;i--){
-    //         for (var k = cantFilas; k>= 0;k--){
-    //             if (i-k >= 0 && j-k >=0 ){
-    //                 let celdaActual = this.tablero[i-k][j-k];
-    //                 if ( (lastState == celdaActual) && lastState != null){
-    //                     secuence.push(celdaActual) ;
-    //                     if (secuence.length == 4){
-    //                         return true;
-    //                     }
-    //                 }else{
-    //                     lastState = celdaActual;
-    //                     secuence = [];
-    //                     secuence.push(celdaActual) ;
-    //                 }
-    //             }
+    // let actualColor = this.getActivePlayer().getColor();
+    // for (let i= 5 ; i > 2; i--) {
+    //     for (let j = 4 ; j > 3; j--) {
+    //         if ((this.tablero[i][j] == actualColor) && (this.tablero[i - 1][j - 1] == actualColor) &&  (this.tablero[i - 2][j - 2] == actualColor) && (this.tablero[i - 3][j - 3] == actualColor))  {
+    //             return true;
     //         }
     //     }
-    //     secuence = [];
     // }
+
+    return false;
+};
+
+Juego.prototype.getDiagonalDer = function(){
+    // let cantFilas = this.dashboard.getCantFilas() - 1;
+    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    // let actualColor = this.getActivePlayer().getColor();
+    // for (let i=0; i < 3; i++) {
+    //     for (let j=5; j > 3; j--) {
+    //         if ((this.matriz[i][j] == actualColor) && (this.matriz[i + 1][j + 1] == actualColor) &&
+    //             (this.matriz[i + 2][j - 2] == actualColor) && (this.matriz[i + 3][j + 3] == actualColor)) {
+    //             return true;
+    //         }
+    //     }
+    // }
+
     return false;
 };
 
 Juego.prototype.checkRowsDiagonal = function(){
-    return this.getDiagonalIzqDer();
+    return this.getDiagonalIzq() ; //|| this.getDiagonalDer() ;
 };
 
 Juego.prototype.cleanCanvas =function() {

@@ -24,9 +24,12 @@ Ficha.prototype.clicked = function(x,y){
 };
 
 Ficha.prototype.renderOrigin = function(){
+    this.setUnselected();
+    this.estado.used = false;
     let canvas = document.getElementById("canvas").getContext("2d");
     canvas.drawImage(this.img, this.xOrigin, this.yOrigin);
-}
+
+};
 
 Ficha.prototype.render = function () {
     let canvas = document.getElementById("canvas").getContext("2d");
