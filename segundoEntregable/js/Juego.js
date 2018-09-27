@@ -159,29 +159,31 @@ Juego.prototype.checkRowsVertical = function(){
     return false;
 };
 
-Juego.prototype.getDiagonalIzqDer = function(col){
-    let cantFilas = this.dashboard.getCantFilas() - 1;
-    let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
-    let lastState = null;
-    let secuence = [];
-    for (var j = cantColumnas+1 ; j>= 0;j--){
-        for (var i = cantFilas+1 ; i>= 0;i--){
-            if (i-1 >= 0 && j-1 >=0){
-                let celdaActual = this.tablero[i-1][j-1];
-                if ( (lastState == celdaActual) && lastState != null){
-                    secuence.push(celdaActual) ;
-                    if (secuence.length == 4){
-                        return true;
-                    }
-                }else{
-                    lastState = celdaActual;
-                    secuence = [];
-                    secuence.push(celdaActual) ;
-                }
-            }
-        }
-        secuence = [];
-    }
+Juego.prototype.getDiagonalIzqDer = function(){
+    // let cantFilas = this.dashboard.getCantFilas() - 1;
+    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
+    // let lastState = null;
+    // let secuence = [];
+    // for (var j = cantColumnas ; j>= 0;j--){
+    //     for (var i = cantFilas; i>= 0;i--){
+    //         for (var k = cantFilas; k>= 0;k--){
+    //             if (i-k >= 0 && j-k >=0 ){
+    //                 let celdaActual = this.tablero[i-k][j-k];
+    //                 if ( (lastState == celdaActual) && lastState != null){
+    //                     secuence.push(celdaActual) ;
+    //                     if (secuence.length == 4){
+    //                         return true;
+    //                     }
+    //                 }else{
+    //                     lastState = celdaActual;
+    //                     secuence = [];
+    //                     secuence.push(celdaActual) ;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     secuence = [];
+    // }
     return false;
 };
 

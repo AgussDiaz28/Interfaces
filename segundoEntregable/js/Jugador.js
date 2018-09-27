@@ -78,7 +78,8 @@ Jugador.prototype.clickOwn = function (x,y) {
     let fichasPropias = this.fichas;
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
-        if (fichasPropias[i].clicked(x,y)){
+        if ( (fichasPropias[i].clicked(x,y)) && !(fichasPropias[i].inUse()) ){
+            console.log(fichasPropias[i]);
             fichasPropias[i].setSelected();
             return true;
         }
@@ -90,7 +91,7 @@ Jugador.prototype.getFichaSeleccionada = function () {
     let fichasPropias = this.fichas;
     let size = fichasPropias.length;
     for (var i=0;i<size;i++){
-        if (fichasPropias[i].isSelected()){
+        if (fichasPropias[i].isSelected() && !fichasPropias[i].inUse()){
             return fichasPropias[i];
         }
     }

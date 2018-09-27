@@ -11,11 +11,13 @@ function Ficha(x,y,radio,img) {
 
 Ficha.prototype.clicked = function(x,y){
     let response = false;
-    if ( (this.x > (x - this.radio))  && (this.x < (x + this.radio)) ){
-        if ( (this.y > (y - this.radio))  && (this.y < (y + this.radio)) ){
-            this.setSelected();
-            response = true;
-            this.errase();
+    if (!this.inUse()){
+        if ( (this.x > (x - this.radio))  && (this.x < (x + this.radio)) ){
+            if ( (this.y > (y - this.radio))  && (this.y < (y + this.radio)) ){
+                this.setSelected();
+                response = true;
+                this.errase();
+            }
         }
     }
     return response;
@@ -32,6 +34,7 @@ Ficha.prototype.render = function () {
 };
 
 Ficha.prototype.errase = function(){
+    if (!this.inUse()){
         let c = document.getElementById('canvas');
         let ctx = c.getContext('2d');
         ctx.beginPath();
@@ -40,14 +43,19 @@ Ficha.prototype.errase = function(){
         ctx.fill();
         ctx.closePath();
         ctx.globalCompositeOperation = "source-over";
+    }
+};
+
+Ficha.prototype.inUse = function(){
+  return this.estado.used;
+};
+
+Ficha.prototype.setUsed = function(){
+  this.estado.used = true;
 };
 
 Ficha.prototype.isSelected = function(){
-  return this.estado.selected;
-};
-
-Ficha.prototype.wasUsed = function(){
-  return this.estado.used;
+    return this.estado.selected;
 };
 
 Ficha.prototype.setUnselected = function () {
@@ -55,9 +63,5 @@ Ficha.prototype.setUnselected = function () {
 };
 
 Ficha.prototype.setSelected = function () {
-    this.estado.selected = true;
-}
-
-Ficha.prototype.setUsed = function () {
     this.estado.selected = true;
 }
