@@ -60,7 +60,7 @@ function dropCoin(e){
     let columnNumber = J.selectedColumn(x,y);
     if (columnNumber != null && J.getActivePlayer().getFichaSeleccionada() != null ){
         J.dropCoin(columnNumber);
-        if (J.movimientoGanador()){
+        if (J.movimientoGanador(J.getActivePlayer().getColor())){
             document.getElementById("ganador").innerHTML = "El jugador ganador fue: " + J.getActivePlayer().getName();
             document.getElementById("ganador").style.color = J.getActivePlayer().getColor();
             document.getElementById("activePlayer").innerHTML = "";

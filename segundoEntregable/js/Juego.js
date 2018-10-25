@@ -11,11 +11,11 @@ Juego.prototype.init = function(){
     this.llenarMatriz();
     this.dashboard.saveNewImageData();
     this.jugadorUno.empezarTurno();
-}
+};
 
 Juego.prototype.saveNewImageData = function() {
     this.dashboard.saveNewImageData();
-}
+};
 
 Juego.prototype.llenarMatriz = function(){
     for ( var y = 0; y < this.dashboard.getCantFilas(); y++ ) {
@@ -85,7 +85,7 @@ Juego.prototype.getPositionXY = function(fila,columna){
     }
 
     return {    x: newX , y: newY };
-}
+};
 
 Juego.prototype.dropCoin = function(columna){
     let fila = this.dashboard.getCantFilas() - 1;
@@ -107,8 +107,8 @@ Juego.prototype.dropCoin = function(columna){
     }
 };
 
-Juego.prototype.movimientoGanador = function(){
-    return this.checkRowsHorizontal() || this.checkRowsVertical() || this.checkRowsDiagonal();
+Juego.prototype.movimientoGanador = function(color){
+    return this.checkRowsHorizontal() || this.checkRowsVertical() || this.checkRowsDiagonal(color);
 };
 
 Juego.prototype.checkRowsHorizontal = function(){
@@ -159,39 +159,34 @@ Juego.prototype.checkRowsVertical = function(){
     return false;
 };
 
-Juego.prototype.getDiagonalIzq = function(){
-    // let cantFilas = this.dashboard.getCantFilas() - 1;
-    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
-    // let actualColor = this.getActivePlayer().getColor();
-    // for (let i= 5 ; i > 2; i--) {
-    //     for (let j = 4 ; j > 3; j--) {
-    //         if ((this.tablero[i][j] == actualColor) && (this.tablero[i - 1][j - 1] == actualColor) &&  (this.tablero[i - 2][j - 2] == actualColor) && (this.tablero[i - 3][j - 3] == actualColor))  {
-    //             return true;
-    //         }
-    //     }
-    // }
-
+Juego.prototype.checkMainDiagonal = function (color) {
+    for (let x = this.tablero.length-1; x >=0; x--) {
+        for (let y = 0; y < this.tablero[x].length-2; y++) {
+            if ((this.tablero[x][y] === color) && (y+3 < this.tablero[x].length) && (x-3 >= 0)){
+                if ((this.tablero[x-1][y+1] === color) && (this.tablero[x-2][y+2] === color) && (this.tablero[x-3][y+3] === color)){
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 };
 
-Juego.prototype.getDiagonalDer = function(){
-    // let cantFilas = this.dashboard.getCantFilas() - 1;
-    // let cantColumnas = this.dashboard.getCantColumnas() - 1 ;
-    // let actualColor = this.getActivePlayer().getColor();
-    // for (let i=0; i < 3; i++) {
-    //     for (let j=5; j > 3; j--) {
-    //         if ((this.matriz[i][j] == actualColor) && (this.matriz[i + 1][j + 1] == actualColor) &&
-    //             (this.matriz[i + 2][j - 2] == actualColor) && (this.matriz[i + 3][j + 3] == actualColor)) {
-    //             return true;
-    //         }
-    //     }
-    // }
-
+Juego.prototype.verificarDiagonalSecundaria = function (color){
+    for (let x = 0; x < this.tablero.length; x++) {
+        for (let y = 0; y < this.tablero[x].length-2; y++) {
+            if ((this.tablero[x][y] === color) && (y+3 < this.tablero[x].length) && (x+3 < this.tablero.length)){
+                if ((this.tablero[x+1][y+1] === color) && (this.tablero[x+2][y+2] === color) && (this.tablero[x+3][y+3] === color)){
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 };
 
-Juego.prototype.checkRowsDiagonal = function(){
-    return this.getDiagonalIzq() ; //|| this.getDiagonalDer() ;
+Juego.prototype.checkRowsDiagonal = function(color){
+    return this.checkMainDiagonal(color) || this.verificarDiagonalSecundaria(color) ;
 };
 
 Juego.prototype.cleanCanvas =function() {
