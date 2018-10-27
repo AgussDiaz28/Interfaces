@@ -1,0 +1,66 @@
+.background {
+    width: 200px; height: 600px;
+    position: relative;
+    background-size: cover ;
+    background: url("../img/background.jpg") repeat-y 0 0;
+    animation: animate 7s linear infinite;
+    z-index:1
+}
+
+.player {
+    width: 150px; height: 85px;
+    position: relative;
+    top: 510px;
+    left: 45px;
+    background: url("../img/plane.png") no-repeat ;
+    z-index:2
+}
+
+.reward {
+    width: 150px; height: 105px;
+    top: initial;
+    position: relative;
+    background: url("../img/reward.png") no-repeat ;
+    z-index:6
+}
+
+.obstacle {
+    width: 150px; height: 135px;
+    position: relative;
+    top: initial;
+    background: url("../img/bird.png") no-repeat;
+    /*animation: animate 7s linear infinite ;*/
+    z-index:6
+}
+
+@keyframes hideObstacle {
+    to{
+        top: 2000px;
+    }
+}
+
+@keyframes animate {
+   from{
+       background-position: 0 0 ;
+   }
+    to{
+        background-position: 0 100% ;
+    }
+}
+
+@keyframes moveLeft {
+
+}
+
+@keyframes moveRight {
+
+}
+
+@keyframes movearound {
+    0% {transform: translateY(0)}
+    100% {transform: translateY(600px);}
+}
+
+body {
+    background-color: #304672;
+}
