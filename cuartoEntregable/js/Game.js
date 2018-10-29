@@ -1,36 +1,103 @@
 class Game {
 
+
     constructor() {
-        this.player = new Player();
-        this.obstacle = new Obstacle(Game.getRandomInt(220));
-        this.reward = new Reward();
+        this.player = {};
+        this.obstacles = [];
+        this.rewards = [];
         this.puntaje = 0;
         this.aggregation = 10;
-        // this.obstacles = [new Obstacle(),new Obstacle(), new Obstacle()];
-        // this.rewards = [new Reward(),new Reward(), new Reward()];
+        this.lastObstacle = 1;
+        this.lastReward = 1;
+        this.stop = false;
+        this.generatePlayer();
+        this.generateNewObstacles(4);
+        this.ObstacleWave();
+        this.generateRewards();
+    };
+
+    generateRewards(){
+        let interval  = setInterval(() => {
+            this.generateNewRewards();
+            if (this.stop){
+                clearInterval(interval);
+            }
+        }, 5500);
     }
 
-    static getRandomInt(max){
-        return Math.floor(Math.random() * Math.floor(max));
-    };
+    ObstacleWave(){
+        let interval  = setInterval(() => {
+            let cant = Object.getRandomInt(2);
+            this.generateNewObstacles(cant);
+            if (this.stop){
+                clearInterval(interval);
+            }
+        }, 500);
+    }
 
     checkStatus(){
         let interval  = setInterval(() => {
             this.puntaje += this.aggregation;
-            $('#puntaje').html(this.puntaje);
-            this.moveObstacleDown();
-            let crash = this.player.isTouching(this.obstacle.getLocation());
+            $('#score').html(this.puntaje);
+            let crash = this.moveObstaclesDown();
             if (crash){
-                console.log('crash');
+                console.log('game ended');
                 clearInterval(interval);
             }
-            console.log('checking...');
         }, 500);
+    };
+
+    generatePlayer() {
+        let data = {
+            x:525,
+            y:475,
+            height:100,
+            width:100,
+            movementLength:20,
+            elem_id : 'player',
+            elem: $('#player'),
+            class: "player",
+        };
+        this.player = new Player(data);
     }
 
-    moveObstacleDown(){
-        this.obstacle.moveDown();
+    generateNewRewards(){
+        // let reward = new Reward({ x:0, y:0, movementLength:20,
+        //     elem_id: 'reward'+this.lastReward,
+        //     class: "reward",
+        // });
+        // this.lastReward++;
+        // this.rewards.push(reward);
     }
+
+    generateNewObstacles(cant) {
+        for (let i=0;i< cant;i++){
+            let obstacle = new Obstacle(
+                { x:0, y:0, movementLength:20,
+                    elem_id: 'obstacle'+this.lastObstacle,
+                    class: "obstacle",
+                });
+            this.lastObstacle++;
+            this.obstacles.push(obstacle);
+        }
+    }
+
+    moveObstaclesDown(){
+        let oneCrashed = false;
+        this.obstacles.forEach(obstacle => {
+            obstacle.moveDown();
+            let obstacleOutOfSpace = obstacle.isOutOfSpace();
+            if (obstacleOutOfSpace){
+                obstacle.randomRender();
+            }
+            if (this.player.isTouching(obstacle.getLocation())){
+                oneCrashed = true;
+                obstacle.elem.addClass('explosion');
+                obstacle.elem.addClass('explosion');
+            }
+        });
+        return oneCrashed;
+    };
 
     movePlayerLeft(){
         this.player.moveLeft();

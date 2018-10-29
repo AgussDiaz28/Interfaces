@@ -1,6 +1,3 @@
-
-// clearInterval(id);
-
 $.fn.moveRight = function(fn) {
     return this.each(function() {
         $(this).bind('moveRight', fn);
@@ -55,23 +52,18 @@ Number.prototype.between = function(a, b) {
 let j = new Game();
 j.checkStatus();
 
-$("body").moveLeft(() => {
+$(document).moveLeft(() => {
     j.movePlayerLeft();
-    console.log('left');
 });
 
-$("body").moveRight(() => {
+$(document).moveRight(() => {
     j.movePlayerRight();
-    console.log('right');
 });
 
-$("body").moveUp(() => {
+$(document).moveUp(() => {
     j.movePlayerUp();
-    console.log('up');
 });
 
-$("body").moveDown(() => {
+$(document).moveDown(() => {
     j.movePlayerDown();
-    console.log('down');
 });
-

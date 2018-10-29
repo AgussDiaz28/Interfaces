@@ -1,66 +1,184 @@
-.background {
-    width: 200px; height: 600px;
-    position: relative;
-    background-size: cover ;
-    background: url("../img/background.jpg") repeat-y 0 0;
-    animation: animate 7s linear infinite;
-    z-index:1
+.container {
+    overflow: hidden;
 }
 
 .player {
-    width: 150px; height: 85px;
+    width: 100px; height: 100px;
     position: relative;
-    top: 510px;
-    left: 45px;
-    background: url("../img/plane.png") no-repeat ;
-    z-index:2
+    top: 475px;
+    left: 525px;
+    background: url("../img/player.png") no-repeat ;
 }
 
 .reward {
-    width: 150px; height: 105px;
-    top: initial;
-    position: relative;
+    width: 150px; height: 135px;
+    top: -300px;
+    position: absolute;
+    bottom: 900px;
     background: url("../img/reward.png") no-repeat ;
-    z-index:6
 }
 
 .obstacle {
     width: 150px; height: 135px;
-    position: relative;
-    top: initial;
-    background: url("../img/bird.png") no-repeat;
-    /*animation: animate 7s linear infinite ;*/
-    z-index:6
+    position: absolute;
+    bottom: 900px;
+    background: url("../img/obstacle.png") no-repeat;
 }
 
-@keyframes hideObstacle {
-    to{
-        top: 2000px;
+* {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+body,
+.breadcrumb {
+    background-color: #00081c;
+    font-family: 'Voces';
+}
+
+.container {
+    width: 1000px;
+    padding: 0 0;
+}
+
+
+.navbar-color,
+.juego-container {
+    background-color: #0a152f;
+}
+
+.navbar-color a {
+    color: #b7b7b7;
+}
+
+.navbar-color>.navbar-brand {
+    color: #deab4a;
+}
+
+
+.juego-container {
+    width: 100%;
+    height: 600px;
+}
+
+#start {
+    background-color: #deab4a;
+    color: #0a152f;
+}
+
+/* ----BOARD CONTAINER---- */
+.board {
+    float: right;
+    width: 300px;
+    height: 100%;
+}
+
+.card {
+    background-color: #0a152f;
+    border: none;
+    color: #b7b7b7;
+    margin-top: 10px;
+}
+
+.high-score {
+    height: 50px;
+}
+
+.score {
+    height: 50px;
+}
+
+.card-header {
+    border: none;
+    border-top: 1px dashed #20325c;
+}
+
+.volume{
+    height: 50px;
+}
+
+.form-group{
+    margin-left: 20px;
+}
+
+.boton{
+    height: 25px;
+}
+
+#game {
+    position: absolute;
+    overflow: hidden;
+    float: left;
+    width: 700px;
+    height: 100%;
+    background-image: url("../img/02.jpeg");
+    background-size: auto,
+    auto,
+    auto;
+    background-repeat: repeat,
+    repeat,
+    repeat;
+    background-position: 0px 0px,
+    0px 0px,
+    0px 0px;
+}
+
+.game-bg-animation {
+    animation: parallax-background linear 5s infinite;
+}
+
+@keyframes parallax-background {
+    from {
+        background-position: 0px 0px, 0px 0px, 0px 0px;
+    }
+
+    to {
+        background-position: 0px 2800px, 0px 1400px, 0px 700px;
     }
 }
 
-@keyframes animate {
-   from{
-       background-position: 0 0 ;
-   }
-    to{
-        background-position: 0 100% ;
+.explosion {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    background: url("../img/explosion.png") 0 0;
+    animation: explosion1 1s steps(20) 1;
+}
+
+@keyframes explosion1 {
+    100% {
+        background-position: -1920px 0px;
     }
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.left {
+    animation: moveLeft ease-out 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.right {
+    animation: moveRight ease-out 0.2s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes moveLeft {
-
+    100% {
+        transform: rotate(-5deg)
+    }
 }
 
 @keyframes moveRight {
-
-}
-
-@keyframes movearound {
-    0% {transform: translateY(0)}
-    100% {transform: translateY(600px);}
-}
-
-body {
-    background-color: #304672;
+    100% {
+        transform: rotate(5deg)
+    }
 }

@@ -1,25 +1,17 @@
 class Obstacle extends Object {
 
-    constructor(XPosition) {
-        super(0,0,20);
-        this.object = $('#obstacle');
-        this.object.addClass('obstacle');
-        this.object.css('left',XPosition);
+
+    constructor(data) {
+        $("#game").append('<div id="'+data.elem_id+'" class="'+data.class+'"></div>');
+        data.elem = $("#"+data.elem_id);
+        super(data);
+        this.randomRender();
     }
 
-    moveHorizontal(){
-        super.moveHorizontal();
-        $('.obstacle').css('left',this.x);
-    }
-
-    moveVertical(){
-        super.moveVertical();
-        $('.obstacle').css('top',this.y);
-    }
-
-    getLocation(){
-        let pos = document.getElementById("obstacle").getBoundingClientRect();
-        return {x:pos.x, y:pos.y};
+    randomRender(){
+        this.elem.addClass(this.class);
+        let newX = Object.getRandomInt(3500);
+        this.elem.css('left',newX);
     }
     
 }
