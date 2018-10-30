@@ -9,14 +9,23 @@ class Game {
         this.lastObstacle = 1;
         this.lastObstacle = 1;
         this.stop = false;
-        this.generatePlayer();
-        this.generateNewObstacles(4);
-        this.ObstacleWave();
-        this.generateRewards();
-        $('#game').addClass('game-bg-animation ');
+        this.first = true;
+
     };
 
     startGame(){
+        $('#gameOver').remove();
+        this.puntaje = 0;
+        $('#score').html(this.puntaje);
+        this.stop = false;
+        if (this.first){
+            this.generatePlayer();
+            this.first = false;
+        }
+        this.checkStatus();
+        this.generateNewObstacles(4);
+        this.ObstacleWave();
+        this.generateRewards();
         $('#game').addClass('game-bg-animation ');
     }
 

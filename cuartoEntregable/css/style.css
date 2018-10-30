@@ -138,7 +138,7 @@ body,
 }
 
 .game-bg-animation {
-    animation: parallax-background linear 3s infinite;
+    animation: parallax-background linear 8s infinite;
 }
 
 @keyframes parallax-background {

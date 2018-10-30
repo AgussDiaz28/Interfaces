@@ -49,9 +49,10 @@ Number.prototype.between = function(a, b) {
     return this > min && this < max;
 };
 
+
+let j = new Game();
 $('#start').click(() => {
-    let j = new Game();
-    j.checkStatus();
+    j.startGame();
 
     $(document).moveLeft(() => {
         j.movePlayerLeft();
