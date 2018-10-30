@@ -1,15 +1,10 @@
 class Reward extends Object{
 
-    constructor() {
-        let data = {
-            x:0,
-            y:0,
-            movementLength:40,
-            elem_id : 'reward',
-            elem: $('#reward'),
-            class: "reward",
-        };
+    constructor(data) {
+        $("#game").append('<div id="'+data.elem_id+'" class="'+data.class+'"></div>');
+        data.elem = $("#"+data.elem_id);
         super(data);
+        this.randomRender();
     }
 
 }

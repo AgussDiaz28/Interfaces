@@ -49,21 +49,25 @@ Number.prototype.between = function(a, b) {
     return this > min && this < max;
 };
 
-let j = new Game();
-j.checkStatus();
+$('#start').click(() => {
+    let j = new Game();
+    j.checkStatus();
 
-$(document).moveLeft(() => {
-    j.movePlayerLeft();
+    $(document).moveLeft(() => {
+        j.movePlayerLeft();
+    });
+
+    $(document).moveRight(() => {
+        j.movePlayerRight();
+    });
+
+    $(document).moveUp(() => {
+        j.movePlayerUp();
+    });
+
+    $(document).moveDown(() => {
+        j.movePlayerDown();
+    });
+
 });
 
-$(document).moveRight(() => {
-    j.movePlayerRight();
-});
-
-$(document).moveUp(() => {
-    j.movePlayerUp();
-});
-
-$(document).moveDown(() => {
-    j.movePlayerDown();
-});

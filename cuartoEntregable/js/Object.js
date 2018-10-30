@@ -10,35 +10,48 @@ class Object {
         this.elem = data.elem;
         this.class = data.class;
         this.elem.addClass(this.class);
-        this.limit = {minX: 0, maxX:600, minY:0, maxY:950 };
+        this.limit = {minX: -20, maxX:630, minY:-20, maxY:520 };
     }
 
     moveRight(){
-        this.x += this.defaultMovement;
-        this.moveHorizontal();
+        if ((this.x < this.limit.maxX)){
+            this.x += this.defaultMovement;
+            this.moveHorizontal();
+        }
     }
 
     moveLeft(){
-        this.x -= this.defaultMovement;
-        this.moveHorizontal();
+        if ((this.x > this.limit.minX)) {
+            this.x -= this.defaultMovement;
+            this.moveHorizontal();
+        }
     }
 
     moveUp(){
-        this.y -= this.defaultMovement;
-        this.moveVertical();
+        if ((this.y < this.limit.maxY) ){
+            this.y -= this.defaultMovement;
+            this.moveVertical();
+        }
+
     }
 
     moveDown(){
-        this.y += this.defaultMovement;
-        this.moveVertical();
+        if ((this.y > this.limit.minY)){
+            this.y += this.defaultMovement;
+            this.moveVertical();
+        }
     }
 
     moveVertical(){
-        this.elem.css('top',this.y);
+        if ( (this.y < this.limit.maxY) && (this.y > this.limit.minY) ){
+            this.elem.css('top',this.y);
+        }
     }
 
     moveHorizontal(){
-        this.elem.css('left',this.x);
+        if ( (this.x < this.limit.maxX) && (this.x > this.limit.minX) ){
+            this.elem.css('left',this.x);
+        }
     }
 
     getLocation(){
@@ -59,4 +72,11 @@ class Object {
         }
         return true;
     }
+
+    randomRender(){
+        this.elem.addClass(this.class);
+        let newX = Object.getRandomInt(650);
+        this.elem.css('left',newX);
+    }
+
 }

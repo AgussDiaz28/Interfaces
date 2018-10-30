@@ -5,24 +5,29 @@
 .player {
     width: 100px; height: 100px;
     position: relative;
-    top: 475px;
-    left: 525px;
+    top: 495px;
+    left: 310px;
     background: url("../img/player.png") no-repeat ;
 }
 
 .reward {
     width: 150px; height: 135px;
-    top: -300px;
+    top: -100px;
     position: absolute;
     bottom: 900px;
     background: url("../img/reward.png") no-repeat ;
+    animation: drop linear;
+    animation-duration: 5s;
 }
 
 .obstacle {
     width: 150px; height: 135px;
+    top: -100px;
     position: absolute;
     bottom: 900px;
     background: url("../img/obstacle.png") no-repeat;
+    animation: drop linear;
+    animation-duration: 5s;
 }
 
 * {
@@ -66,7 +71,24 @@ body,
     color: #0a152f;
 }
 
-/* ----BOARD CONTAINER---- */
+.gameOver{
+    color: #deab4a;
+    font-size: 4em;
+    margin-top: 100px;
+    text-align: center;
+    animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .board {
     float: right;
     width: 300px;
@@ -111,29 +133,21 @@ body,
     float: left;
     width: 700px;
     height: 100%;
-    background-image: url("../img/02.jpeg");
-    background-size: auto,
-    auto,
-    auto;
-    background-repeat: repeat,
-    repeat,
-    repeat;
-    background-position: 0px 0px,
-    0px 0px,
-    0px 0px;
+    background-size: auto;
+    background: url("../img/02.jpeg") repeat 0px 0px;
 }
 
 .game-bg-animation {
-    animation: parallax-background linear 5s infinite;
+    animation: parallax-background linear 3s infinite;
 }
 
 @keyframes parallax-background {
     from {
-        background-position: 0px 0px, 0px 0px, 0px 0px;
+        background-position: 0px 0px;
     }
 
     to {
-        background-position: 0px 2800px, 0px 1400px, 0px 700px;
+        background-position: 0px 2800px;
     }
 }
 
@@ -142,23 +156,18 @@ body,
     height: 96px;
     position: absolute;
     background: url("../img/explosion.png") 0 0;
-    animation: explosion1 1s steps(20) 1;
+    animation: explosion 1s steps(20) 1;
 }
 
-@keyframes explosion1 {
+@keyframes explosion {
     100% {
         background-position: -1920px 0px;
     }
 }
 
 @keyframes fadein {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .left {
@@ -180,5 +189,15 @@ body,
 @keyframes moveRight {
     100% {
         transform: rotate(5deg)
+    }
+}
+
+@keyframes drop {
+    from {
+        transform: translate(0px,0px) ;
+    }
+
+    to {
+        transform: translate(0px, 950px);
     }
 }
