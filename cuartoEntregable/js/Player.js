@@ -1,6 +1,8 @@
 class Player extends Object {
 
     constructor(data) {
+        $("#game").append('<div id="player" class="player"></div>');
+        data.elem = $("#player");
         super(data);
     }
 

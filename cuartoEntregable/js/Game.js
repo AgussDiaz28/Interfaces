@@ -2,6 +2,7 @@ class Game {
 
     constructor() {
         this.player = {};
+        this.intervals = [];
         this.obstacles = [];
         this.rewards = [];
         this.puntaje = 0;
@@ -10,31 +11,44 @@ class Game {
         this.lastObstacle = 1;
         this.lastReward = 1;
         this.stop = false;
-        this.first = true;
         this.keyCodes = {   37 : "movePlayerLeft" , 39 : "movePlayerRight" ,
                             40 : "movePlayerDown", 38 : "movePlayerUp"
                         }
-
     };
 
+    cleanIntervals (){
+        this.intervals.forEach(elem => {
+            clearInterval(elem);
+            this.intervals = [];
+        })
+    }
+
+    keyExist(eventKey){
+        for (let key in this.keyCodes) {
+            if (parseInt(key) === eventKey) {
+                return true;
+            }
+        }
+    }
+
     movePlayer(eventKey){
-         this[this.keyCodes[eventKey]]();
+        if (this.keyExist(eventKey)) {
+            this[this.keyCodes[eventKey]]();
+        }
     }
 
     startGame(){
-        $('#gameOver').remove();
         this.puntaje = 0;
         this.cantNewObjects = 2;
         $('#score').html(this.puntaje);
-        this.stop = false;
-        if (this.first){
-            this.generatePlayer();
-            this.first = false;
-        }
+        $('#gameOver').remove();
+        $('#player').remove();
+        this.generatePlayer();
         this.checkStatus();
         this.generateNewObstacles(4);
         this.ObstacleWave();
         this.generateRewards();
+        this.stop = false;
         $('#game').addClass('game-bg-animation ');
     }
 
@@ -48,7 +62,6 @@ class Game {
                     this.puntaje += 100;
                     $('#score').html(this.puntaje);
                 }
-
             }
         });
         return oneCrashed;
@@ -62,6 +75,7 @@ class Game {
                 clearInterval(interval);
             }
         }, 8500);
+        this.intervals.push(interval);
     }
 
     ObstacleWave(){
@@ -76,6 +90,7 @@ class Game {
                 clearInterval(interval);
             }
         }, 1000);
+        this.intervals.push(interval);
     }
 
     checkStatus(){
@@ -89,9 +104,10 @@ class Game {
                 $('#game').removeClass('game-bg-animation ');
                 let game_over = "<h1 id='gameOver' class='gameOver'>Game Over!!</h1>";
                 $("#game").append(game_over);
-                clearInterval(interval);
+                this.cleanIntervals();
             }
         }, 25/10000);
+        this.intervals.push(interval);
     };
 
     generatePlayer() {
@@ -102,7 +118,6 @@ class Game {
             width:85,
             movementLength:40,
             elem_id : 'player',
-            elem: $('#player'),
             class: "player",
         };
         this.player = new Player(data);
