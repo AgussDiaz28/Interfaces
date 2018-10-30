@@ -151,6 +151,13 @@ body,
     }
 }
 
+.catch{
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    animation: catch 1s steps(20) 1;
+}
+
 .explosion {
     width: 96px;
     height: 96px;
@@ -160,6 +167,12 @@ body,
 }
 
 @keyframes explosion {
+    100% {
+        background-position: -1920px 0px;
+    }
+}
+
+@keyframes catch {
     100% {
         background-position: -1920px 0px;
     }

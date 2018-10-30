@@ -8,4 +8,8 @@ class Reward extends Object{
         this.randomRender();
     }
 
+    errase(){
+        this.elem.css('display','none');
+    }
+
 }

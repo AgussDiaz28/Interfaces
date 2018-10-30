@@ -42,9 +42,9 @@ class Game {
         let oneCrashed = false;
         this.rewards.forEach(reward => {
             if (this.player.isTouching(reward.getLocation())){
-
                 if (!reward.touched) {
                     reward.touched = true;
+                    reward.errase();
                     this.puntaje += 100;
                     $('#score').html(this.puntaje);
                 }
