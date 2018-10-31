@@ -16,16 +16,4 @@ class Player extends Object {
         return false;
     }
 
-    moveRight(){
-        super.moveRight();
-        this.elem.removeClass('left');
-        this.elem.addClass('right')
-    }
-
-    moveLeft(){
-        super.moveLeft();
-        this.elem.removeClass('right');
-        this.elem.addClass('left')
-    }
-
 }

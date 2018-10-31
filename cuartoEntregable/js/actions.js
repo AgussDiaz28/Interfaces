@@ -4,13 +4,15 @@ Number.prototype.between = function(a, b) {
     return this > min && this < max;
 };
 
-
-
 let j = new Game();
+
 $('#start').click(() => {
     j.startGame();
     $( document).keydown(function(e) {
         j.movePlayer(e.keyCode);
+    });
+    $( document).keyup(function(e) {
+        j.stopPlayer(e.keyCode);
     });
 });
 

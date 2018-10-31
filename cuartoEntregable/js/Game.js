@@ -13,13 +13,19 @@ class Game {
         this.stop = false;
         this.keyCodes = {   37 : "movePlayerLeft" , 39 : "movePlayerRight" ,
                             40 : "movePlayerDown", 38 : "movePlayerUp"
-                        }
+                        } ;
+        this.keyPressed = {   37 : false , 39 : false , 40 : false, 38 : false  };
     };
+
+    stopPlayer(eventKey){
+        if (this.keyExist(eventKey)) {
+            this.keyPressed[eventKey] = false;
+        }
+    }
 
     cleanIntervals (){
         this.intervals.forEach(elem => {
             clearInterval(elem);
-            this.intervals = [];
         })
     }
 
@@ -31,9 +37,20 @@ class Game {
         }
     }
 
+    moveWithInterval(eventKey){
+        let interval = setInterval(() => {
+            if (this.keyPressed[eventKey]){
+                this[this.keyCodes[eventKey]]();
+            }else{
+                clearInterval(interval);
+            }
+        }, 20);
+    }
+
     movePlayer(eventKey){
         if (this.keyExist(eventKey)) {
-            this[this.keyCodes[eventKey]]();
+            this.keyPressed[eventKey] = true;
+            this.moveWithInterval(eventKey);
         }
     }
 
@@ -43,6 +60,9 @@ class Game {
         $('#score').html(this.puntaje);
         $('#gameOver').remove();
         $('#player').remove();
+        $('.reward').css('display','none');
+        $( document ).unbind();
+        $('.obstacle').css('display','none');
         this.generatePlayer();
         this.checkStatus();
         this.generateNewObstacles(4);
@@ -116,7 +136,7 @@ class Game {
             y:475,
             height:85,
             width:85,
-            movementLength:40,
+            movementLength:8,
             elem_id : 'player',
             class: "player",
         };
@@ -150,8 +170,7 @@ class Game {
         this.obstacles.forEach(obstacle => {
             if (this.player.isTouching(obstacle.getLocation())){
                 oneCrashed = true;
-                obstacle.elem.addClass('explosion');
-                // obstacle.elem.addClass('explosion');
+                this.player.elem.addClass('explosion');
             }
         });
         return oneCrashed;

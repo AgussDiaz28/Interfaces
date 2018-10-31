@@ -134,7 +134,7 @@ body,
     width: 700px;
     height: 100%;
     background-size: auto;
-    background: url("../img/02.jpeg") repeat 0px 0px;
+    background: url("../img/02.png") repeat 0px 0px;
 }
 
 .game-bg-animation {
@@ -151,28 +151,16 @@ body,
     }
 }
 
-.catch{
-    width: 96px;
-    height: 96px;
-    position: absolute;
-    animation: catch 1s steps(20) 1;
-}
-
 .explosion {
     width: 96px;
     height: 96px;
     position: absolute;
-    background: url("../img/explosion.png") 0 0;
-    animation: explosion 1s steps(20) 1;
+    background: url("../img/explosion.png") 0 0 no-repeat;
+    animation: explosion 1s steps(20) 1 forwards;
+
 }
 
 @keyframes explosion {
-    100% {
-        background-position: -1920px 0px;
-    }
-}
-
-@keyframes catch {
     100% {
         background-position: -1920px 0px;
     }
@@ -184,24 +172,42 @@ body,
 }
 
 .left {
-    animation: moveLeft ease-out 0.2s;
-    animation-fill-mode: forwards;
+    animation: moveLeft ease-out 0.2s ;
 }
 
 .right {
     animation: moveRight ease-out 0.2s;
-    animation-fill-mode: forwards;
+}
+
+.paused {
+    animation-play-state: paused;
+}
+
+.rotate{
+    animation: moveRight ease-out 1s infinite;
 }
 
 @keyframes moveLeft {
+    0% {
+        transform: rotate(0deg)
+    }
+    50% {
+        transform: rotate(-10deg)
+    }
     100% {
-        transform: rotate(-5deg)
+        transform: rotate(0deg)
     }
 }
 
 @keyframes moveRight {
+    0% {
+        transform: rotate(0deg)
+    }
+    50% {
+        transform: rotate(10deg)
+    }
     100% {
-        transform: rotate(5deg)
+        transform: rotate(0deg)
     }
 }
 

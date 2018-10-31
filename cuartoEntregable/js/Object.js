@@ -28,15 +28,14 @@ class Object {
     }
 
     moveUp(){
-        if ((this.y < this.limit.maxY) ){
+        if ((this.y - this.defaultMovement  > this.limit.minY) ){
             this.y -= this.defaultMovement;
             this.moveVertical();
         }
-
     }
 
     moveDown(){
-        if ((this.y > this.limit.minY)){
+        if ((this.y + this.defaultMovement  < this.limit.maxY) ){
             this.y += this.defaultMovement;
             this.moveVertical();
         }
