@@ -1,4 +1,4 @@
-class Obstacle extends Object {
+class Obstacle extends SpaceObject {
 
     constructor(data) {
         $("#game").append('<div id="'+data.elem_id+'" class="'+data.class+'"></div>');
@@ -6,5 +6,5 @@ class Obstacle extends Object {
         super(data);
         this.randomRender();
     }
-    
+
 }

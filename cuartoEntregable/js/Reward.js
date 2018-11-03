@@ -1,4 +1,4 @@
-class Reward extends Object{
+class Reward extends SpaceObject{
 
     constructor(data) {
         $("#game").append('<div id="'+data.elem_id+'" class="'+data.class+'"></div>');
@@ -8,8 +8,12 @@ class Reward extends Object{
         this.randomRender();
     }
 
-    errase(){
+    erase(){
         this.elem.css('display','none');
+    }
+
+    shine(){
+        this.elem.addClass('sparks');
     }
 
 }

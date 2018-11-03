@@ -1,4 +1,4 @@
-class Object {
+class SpaceObject {
 
     constructor(data){
         this.x = data.x;
@@ -74,7 +74,7 @@ class Object {
 
     randomRender(){
         this.elem.addClass(this.class);
-        let newX = Object.getRandomInt(650);
+        let newX = SpaceObject.getRandomInt(650);
         this.elem.css('left',newX);
     }
 

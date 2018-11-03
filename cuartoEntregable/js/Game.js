@@ -11,9 +11,7 @@ class Game {
         this.lastObstacle = 1;
         this.lastReward = 1;
         this.stop = false;
-        this.keyCodes = {   37 : "movePlayerLeft" , 39 : "movePlayerRight" ,
-                            40 : "movePlayerDown", 38 : "movePlayerUp"
-                        } ;
+        this.keyCodes = { 37:"movePlayerLeft", 39:"movePlayerRight" , 40:"movePlayerDown", 38:"movePlayerUp"} ;
         this.keyPressed = {   37 : false , 39 : false , 40 : false, 38 : false  };
     };
 
@@ -78,7 +76,8 @@ class Game {
             if (this.player.isTouching(reward.getLocation())){
                 if (!reward.touched) {
                     reward.touched = true;
-                    reward.errase();
+                    reward.shine();
+                    //reward.erase();
                     this.puntaje += 100;
                     $('#score').html(this.puntaje);
                 }
@@ -103,7 +102,7 @@ class Game {
             this.puntaje += this.aggregation;
             $('#score').html(this.puntaje);
             if (!this.stop){
-                let cant = Object.getRandomInt(this.cantNewObjects);
+                let cant = SpaceObject.getRandomInt(this.cantNewObjects);
                 this.cantNewObjects = this.cantNewObjects * 1.02;
                 this.generateNewObstacles(cant);
             }else {

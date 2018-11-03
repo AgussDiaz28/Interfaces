@@ -1,4 +1,4 @@
-class Player extends Object {
+class Player extends SpaceObject {
 
     constructor(data) {
         $("#game").append('<div id="player" class="player"></div>');
