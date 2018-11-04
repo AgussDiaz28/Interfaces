@@ -77,7 +77,6 @@ class Game {
                 if (!reward.touched) {
                     reward.touched = true;
                     reward.shine();
-                    //reward.erase();
                     this.puntaje += 100;
                     $('#score').html(this.puntaje);
                 }
@@ -93,7 +92,7 @@ class Game {
             }else{
                 clearInterval(interval);
             }
-        }, 8500);
+        }, 2500);
         this.intervals.push(interval);
     }
 
@@ -103,7 +102,7 @@ class Game {
             $('#score').html(this.puntaje);
             if (!this.stop){
                 let cant = SpaceObject.getRandomInt(this.cantNewObjects);
-                this.cantNewObjects = this.cantNewObjects * 1.02;
+                this.cantNewObjects = this.cantNewObjects * 1.017;
                 this.generateNewObstacles(cant);
             }else {
                 clearInterval(interval);
@@ -130,14 +129,8 @@ class Game {
     };
 
     generatePlayer() {
-        let data = {
-            x:310,
-            y:475,
-            height:85,
-            width:85,
-            movementLength:8,
-            elem_id : 'player',
-            class: "player",
+        let data = {x:310,  y:475, height:85, width:85,
+            movementLength:8, elem_id : 'player', class: "player",
         };
         this.player = new Player(data);
     }
