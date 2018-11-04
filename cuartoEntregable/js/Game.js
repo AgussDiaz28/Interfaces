@@ -76,9 +76,11 @@ class Game {
             if (this.player.isTouching(reward.getLocation())){
                 if (!reward.touched) {
                     reward.touched = true;
+                    this.player.shine();
                     reward.shine();
                     this.puntaje += 100;
                     $('#score').html(this.puntaje);
+                    $('#score').addClass('color');
                 }
             }
         });
@@ -92,7 +94,7 @@ class Game {
             }else{
                 clearInterval(interval);
             }
-        }, 2500);
+        }, 5500);
         this.intervals.push(interval);
     }
 
@@ -100,9 +102,10 @@ class Game {
         let interval  = setInterval(() => {
             this.puntaje += this.aggregation;
             $('#score').html(this.puntaje);
+            $('#score').removeClass('color');
             if (!this.stop){
                 let cant = SpaceObject.getRandomInt(this.cantNewObjects);
-                this.cantNewObjects = this.cantNewObjects * 1.017;
+                this.cantNewObjects = this.cantNewObjects * 1.019;
                 this.generateNewObstacles(cant);
             }else {
                 clearInterval(interval);

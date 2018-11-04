@@ -13,9 +13,8 @@ class Reward extends SpaceObject{
     }
 
     shine(){
-        console.log(this.elem_id+'is sparking');
-        document.getElementById(this.elem_id).classList.add('sparks');
-        console.log(document.getElementById(this.elem_id));
+        this.elem.append('<div class="sparks"></div>');
+        this.erase();
     }
 
 }

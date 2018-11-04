@@ -222,6 +222,32 @@ body,
     }
 }
 
+.color {
+    animation: color 1s;
+}
+
+@keyframes color {
+    0% {
+        color: #b7b7b7;
+        font-size: 0.8rem;
+    }
+    50% {
+        color: #deab4a;
+        font-size: 2.5rem;
+    }
+    100% {
+        color: #deab4a;
+    }
+}
+
+.controls{
+    margin-top: 200px;
+}
+
+footer{
+    margin-top: 40px;
+}
+
 @keyframes drop {
     from {
         transform: translate(0px,0px) ;
