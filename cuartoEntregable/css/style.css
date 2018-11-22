@@ -100,10 +100,11 @@ body,
     border: none;
     color: #b7b7b7;
     margin-top: 10px;
+
 }
 
-.high-score {
-    height: 50px;
+.card-title{
+    font-size: 40px;
 }
 
 .score {
@@ -257,3 +258,128 @@ footer{
         transform: translate(0px, 950px);
     }
 }
+
+/* ----NAVBAR---- */
+.navbar-color,
+.juego-container {
+    background-color: #0a152f;
+}
+
+.navbar-color a {
+    color: #b7b7b7;
+}
+
+.navbar-color>.navbar-brand {
+    color: #deab4a;
+}
+@font-face {
+    font-family: "Lao MN";
+    src: url("fonts/Lao MN.ttc");
+}
+
+body,
+.breadcrumb {
+    --colorDestacado: #deab4a;
+    background-color: #00081c;
+    color: #b7b7b7;
+    font-family: 'Lao MN', 'Voces';
+}
+
+h1 {
+    font-size: 20px;
+}
+
+a {
+    color: #b7b7b7;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.nav-link:hover,
+a:hover {
+    color: #deab4a;
+}
+
+.fa-star {
+    color: #deab4a;
+}
+
+.container {
+    width: 1000px;
+    padding: 0 0;
+}
+
+.divider {
+    top: 10%;
+    bottom: 10%;
+    border-right: 1px solid white;
+}
+
+/* ----NAVBAR---- */
+.navbar-color,
+.juego-container {
+    background-color: #0a152f;
+}
+
+.navbar-color a {
+    font-size: 1.5em;
+    color: #b7b7b7;
+}
+
+.navbar-color>.navbar-brand {
+    font-size: 1.5em;
+    color: #deab4a;
+}
+
+.navbar-brand {
+    font-size: 1.8rem !important;
+}
+
+.navbar {
+    font-size: 0.8rem;
+}
+
+.header-search {
+    width: 85px;
+    position: relative;
+}
+
+.header-search input {
+    margin-top: 4px;
+    position: absolute;
+    width: 0px;
+    float: Left;
+    margin-left: 210px;
+    right: 90px;
+    transition: all 0.4s ease-in-out;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.header-search:hover input,
+.header-search input:focus {
+    width: 200px;
+    margin-left: 0px;
+    color: #ffffff;
+    font-weight: bold;
+    background: rgba(19, 31, 59, 1);
+}
+
+.header-search input::placeholder {
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.btn-srch {
+    margin-top: 8px;
+    position: absolute;
+    right: 15px;
+    border: 0;
+    background: transparent;
+}
+
+
