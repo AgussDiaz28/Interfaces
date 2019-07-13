@@ -9,36 +9,61 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="img/paint.png">
-	<body class="center">
-        <div class="container" style="margin-top: 1%">
-            <div class="row justify-content-md-center">
-                <div class="col-5 justify-content-md-right">
-                    <label for="namep1"> Nombre Jugador 1</label> <br>
-                    <input name="name" id="namep1"type="text" value="Agustin">  </input>
-                </div>
-                <div class="col-2 justify-content-md-right" >
-                    <button id="start"> Empezar Juego </button>
-                </div>
-                <div class="col-5" style="float: left;">
-                    <label for="namep2"> Nombre Jugador 2</label> <br>
-                    <input name="name" id="namep2"type="text" value="Diego"> </input>
-                </div>
+	<body id="body" class="center">
+    <div class="container">
+        <div class="cols-xs-6" style="float: right;">
+            <div class="col-xs-5">
+                <label id="labelActivePlayer" for="activePlayer"> Turno del Jugador: </label>
+                <span name="activePlayer" id="activePlayer" type="text" style="font-weight: bold; font-size: 150%;"> </span>
+                <span id="ganador" style="color: yellow;font-weight: bold; font-size: 120%;"></span>
             </div>
-
-            <div class="row justify-content-md-center" >
-                <div class="col">
-                    <canvas id="canvas" width="1100" height="750" style="border-style: dashed"></canvas>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 1%">
+        <div class="row">
+            <div class="col-xs-6" style="margin-left: 1.5%; margin-bottom:0.5% ">
+                <div class="col-xs-5">
+                    <div class="row">
+                        <div class="col-auto">
+                            <label class="sr-only" for="namep1"></label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Jugador Uno</div>
+                                </div>
+                                <input type="text" class="form-control" id="namep1" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <label class="sr-only" for="namep2"></label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Jugador Dos</div>
+                                </div>
+                                <input type="text" class="form-control" id="namep2" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <button id="start" class="btn btn-light" style="height: 37px"> Jugar </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="row justify-content-md-center" >
+            <div class="col">
+                <canvas id="canvas" class="shadow-lg p-3 mb-5 rounded" width="1100" height="700"
+                        style="border-style: dashed;"></canvas>
+            </div>
+        </div>
+    </div>
+
 
 	</body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/Jugador.js"></script>
     <script type="text/javascript" src="js/Juego.js"></script>
+    <script type="text/javascript" src="js/Ficha.js"></script>
     <script type="text/javascript" src="js/Dashboard.js"></script>
 	<script type="text/javascript" src="js/actions.js"></script>
-	<script type="text/javascript" src="js/events.js"></script>
 
 
 

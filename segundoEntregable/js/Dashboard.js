@@ -1,47 +1,51 @@
-function Dashboard() {
-    this.limiteFicha = 40;
-    this.limiteColumna = 20;
-    this.fichas = [{x:79,y:120},{x:1090, y:122}];
-    this.columnas = [ {x:376,y:170}, {x:444,y:170}, {x:517,y:170}, {x:753,y:170}, {x:824,y:170}, {x:898,y:170}, {x:960,y:170},
-                    ];
+function Dashboard(filas,columnas,xPosition,yPosition,filePath,sloth,slotw) {
+    this.filas = filas;
+    this.columnas = columnas;
+    this.xPosition = xPosition;
+    this.yPosition = yPosition;
+    this.filePath = filePath;
+    this.imageData = null;
+    this.slot = { h:sloth,w:slotw };
+    this.render();
 };
 
-Dashboard.prototype.levantarFicha = function (jugador,col) {
-
+Dashboard.prototype.render = function(){
+    let canvas = document.getElementById("canvas").getContext("2d");
+    let image = new Image();
+    image.src = this.filePath;
+    let own = this;
+    image.onload = function(){
+        canvas.drawImage(image, own.xPosition, own.yPosition);
+    };
 };
 
-Dashboard.prototype.pintarTablero = function (jugador,col,fila) {
+Dashboard.prototype.saveNewImageData = function(){
+    let canvas = document.getElementById("canvas").getContext("2d");
+    this.imageData = canvas.getImageData(0,0,1100,700);
+}
 
+Dashboard.prototype.getCantFilas = function () {
+    return this.filas;
 };
 
-Dashboard.prototype.clickCercaFicha = function (x,y) {
-    let limiteFicha = this.limiteFicha;
-    let arr = this.fichas;
-    let response = false;
-    arr.forEach(function (elem) {
-        if ( (elem.x > (x - limiteFicha))  && (elem.x < (x + limiteFicha)) ){
-            if ( (elem.y > (y - limiteFicha))  && (elem.y < (y + limiteFicha)) ){
-                response = true;
-            }
-        }
-    });
-    return response;
+Dashboard.prototype.getCantColumnas = function () {
+    return this.columnas;
 };
 
-Dashboard.prototype.clickCercaColumna = function (x,y) {
-   let limiteColumna = this.limiteColumna;
-   let limiteFicha = this.limiteFicha;
-   let selectedRow = null;
-   let arr = this.columnas;
-   let cont = 0;
-   arr.forEach(function (elem) {
-       if ( (y < (elem.y + limiteFicha)) && (y > (elem.y - limiteFicha)) ){
-            if ( (x < (elem.x + limiteColumna)) && (x > (elem.x - limiteColumna)) ){
-                selectedRow = cont;
-            }
-       }
-       cont++;
-   });
-   console.log(selectedRow)
-   return selectedRow;
+Dashboard.prototype.getX = function () {
+    return this.xPosition;
 };
+
+Dashboard.prototype.getY = function () {
+    return this.yPosition;
+};
+
+Dashboard.prototype.getWidth = function () {
+    return this.slot.w;
+};
+
+Dashboard.prototype.getHeight = function () {
+    return this.slot.w;
+};
+
+
